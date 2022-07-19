@@ -1,4 +1,4 @@
-const riotKey = "RGAPI-ed7f9fc4-43e2-4fe4-aee0-15f4cbeb1696";
+const riotKey = "RGAPI-6e871128-9830-41e2-b6c6-a834f6c13e56";
 
 //populate champions
 async function getChampions() {
@@ -99,4 +99,83 @@ function searchItems() {
       card[i].style.display = "none";
     }
   }
+}
+
+//search Leaderboards
+
+//populate champions
+async function getLeaderboard(server) {
+  const response = await fetch(
+    `https://${server}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${riotKey}`
+  );
+  const data = await response.json();
+  console.log(data);
+  //create leaderboard list
+
+  //show range
+  const end = document.getElementById("range").value;
+
+  let txt = "<ul class='list-unstyled'>";
+  //sort by league points from highest to lowest
+  data.entries.sort((a, b) => {
+    return b.leaguePoints - a.leaguePoints;
+  });
+  if (end == "0") {
+    for (let i = 0; i < data.entries.length; i++) {
+      txt += `
+      <li onclick="getSummonerData('${server}',
+      '${data.entries[i].summonerName}',
+      '${data.entries[i].leaguePoints}',
+      '${data.entries[i].wins}',
+      '${data.entries[i].losses}',
+      )">`;
+      txt += `${data.entries[i].summonerName}, ${data.entries[i].leaguePoints}</li>`;
+    }
+  } else {
+    for (let i = 0; i < end; i++) {
+      txt += `
+      <li onclick="getSummonerData('${server}',
+      '${data.entries[i].summonerName}',
+      '${data.entries[i].leaguePoints}',
+      '${data.entries[i].wins}',
+      '${data.entries[i].losses}',
+      )">`;
+      txt += `${data.entries[i].summonerName}, ${data.entries[i].leaguePoints}</li>`;
+    }
+  }
+
+  txt += "</ul>";
+
+  //put list inside div
+  document.getElementById("summoners").innerHTML = txt;
+}
+
+async function getSummonerData(
+  server,
+  summonerName,
+  leaguePoints,
+  wins,
+  losses
+) {
+  const response = await fetch(
+    `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${riotKey}`
+  );
+  const data = await response.json();
+  const puuid = data.puuid;
+
+  const response2 = await fetch(
+    `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${riotKey}`
+  );
+  const data2 = await response2.json();
+
+  let txt = "";
+  txt += `<img src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/profileicon/588.png" />`;
+  txt += `<h3>${summonerName}</h3>`;
+  txt += `<small>${data.summonerLevel}</small>`;
+  txt += `LP: ${leaguePoints} w:${wins} l: ${losses}<br />`;
+  txt += `matches:<br />`;
+  txt += data2;
+
+  document.getElementById("summonerDetails").innerHTML = txt;
+  //console.log(data2);
 }

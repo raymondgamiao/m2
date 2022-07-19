@@ -14,7 +14,7 @@
     <!--=================-->
   </head>
 
-  <body onload="getItems()">
+  <body>
     <nav class="navbar navbar-expand-lg sticky-top px-md-5 bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">RITO Companion</a>
@@ -46,9 +46,57 @@
     </nav>
 
     <!-- The header content -->
-    <div class="container-fluid h-100">
+    <div class="container h-100">
       <div class="row">
-        <div class="div text-center">leaderboards</div>
+        <div class="div col-12 text-center border">
+          <h1>Leaderboards</h1>
+          <div class="input-group mb-3">
+            <select
+              class="btn btn-outline-secondary dropdown-toggle"
+              type="button"
+              id="server"
+            >
+              <option value="br1">BR1</option>
+              <option value="eun1">EUN1</option>
+              <option value="euw1">EUW1</option>
+              <option value="jp1">JP1</option>
+              <option value="kr">KR</option>
+              <option value="la1">LA1</option>
+              <option value="la2">LA2</option>
+              <option value="na1">NA1</option>
+              <option value="oc1">OC1</option>
+              <option value="ru">RU</option>
+              <option value="tr1">TR1</option>
+            </select>
+            <select
+              class="btn btn-outline-secondary dropdown-toggle"
+              type="button"
+              id="range"
+            >
+              <option value="0">Show All</option>
+              <option value="10">Top 10</option>
+              <option value="50">top 50</option>
+              <option value="100">top 100</option>
+            </select>
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Text input with dropdown button"
+            />
+          </div>
+          <div>
+            <button
+              class="btn btn-secondary"
+              onclick="getLeaderboard(document.getElementById('server').value);"
+            >
+              search
+            </button>
+          </div>
+        </div>
+        <div class="col-4 border">
+          <div id="summoners"></div>
+        </div>
+        <div class="col-8 border" id="summonerDetails"></div>
       </div>
     </div>
 
