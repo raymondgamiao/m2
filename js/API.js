@@ -1,4 +1,4 @@
-const riotKey = "RGAPI-52c665bd-2ff0-4645-96c8-64eee61e18e2";
+const riotKey = "RGAPI-ed7f9fc4-43e2-4fe4-aee0-15f4cbeb1696";
 
 //populate champions
 async function getChampions() {
@@ -6,8 +6,8 @@ async function getChampions() {
     "http://ddragon.leagueoflegends.com/cdn/12.13.1/data/en_US/champion.json";
   const response = await fetch(link);
   let data = await response.json();
-  // champion list
 
+  //create champion cards
   let txt = "<div class='d-flex flex-wrap justify-content-start mx-auto'>";
   for (let x in data.data) {
     let imgSrc = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${x}.png`;
@@ -20,6 +20,8 @@ async function getChampions() {
     txt += `</div></div>`;
   }
   txt += `</div>`;
+
+  //put cards inside div
   document.getElementById("champions").innerHTML = txt;
 }
 
@@ -31,6 +33,8 @@ function searchChampions() {
   const cardh5 = list.querySelectorAll("h5");
   const card = list.querySelectorAll("div.card");
 
+  //search all cards for matches with search query
+  //if match then show, else hide
   for (i = 0; i < cardh5.length; i++) {
     cardTitle = cardh5[i].outerText;
     if (cardTitle.toUpperCase().indexOf(query) > -1) {
@@ -41,28 +45,58 @@ function searchChampions() {
   }
 }
 
-async function getSummoners() {
-  const options = {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
-      "Accept-Language": "en-US,en;q=0.9,fil;q=0.8",
-      "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
-      Origin: "https://developer.riotgames.com",
-    },
-  };
-  let link = `https://na1.api.riotgames.com/lol/league/v4/masterleagues/by-queue/RANKED_SOLO_5x5?api_key=${riotKey}`;
-  const response = await fetch(link, options);
+//populate items
+async function getItems() {
+  let link =
+    "http://ddragon.leagueoflegends.com/cdn/12.13.1/data/en_US/item.json";
+  const response = await fetch(link);
   let data = await response.json();
-  // search function
 
-  // summoner list
+  //create item cards
+  let txt = "<div class='d-flex flex-wrap justify-content-start mx-auto'>";
+  for (let x in data.data) {
+    let imgSrc = `https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/${data.data[x].image.full}`;
+    txt += `<div class="card m-2" style="width: 15rem;">`;
+    txt += ` <img src="${imgSrc}" class="card-img-top" alt="...">`;
+    txt += `<div class="card-body">`;
+    txt += `<h5 class="card-title">${data.data[x].name}</h5>`;
+    //txt += `<p class="card-text">${data.data[x].description}</p>`;
+    txt += `<p class="card-text">${data.data[x].plaintext}</p>`;
 
-  for (x = 0; x < data.entries.length; x++) {
-    //console.log(data.entries[x].summonerName);
+    //some items are not upgradeable
+    //show items if upgradeable is true
+    if (data.data[x].hasOwnProperty("into") == true) {
+      txt += `<p class="mb-0 ">upgrades:</p>`;
+      for (let i in data.data[x].into) {
+        let buildInto = data.data[x].into[i];
+        let buildIntoImg = data.data[buildInto].image.full;
+        let buildIntoImgsrc = `https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/${buildIntoImg}`;
+        txt += `<img src="${buildIntoImgsrc}" class="card-img-top" alt="..." style="height: 20px; width: 20px"> `;
+      }
+    }
+    txt += `</div></div>`;
   }
-  return data;
+  txt += `</div>`;
+  //put items cards into div
+  document.getElementById("items").innerHTML += txt;
 }
-//console.log(getSummoners());
 
-getSummoners();
+//search items
+function searchItems() {
+  const inputSearch = document.querySelector('input[name="inputSearch"]');
+  const query = inputSearch.value.toUpperCase();
+  const list = document.getElementById("items");
+  const cardh5 = list.querySelectorAll("h5");
+  const card = list.querySelectorAll("div.card");
+
+  //search all cards for matches with search query
+  //if match then show, else hide
+  for (i = 0; i < cardh5.length; i++) {
+    cardTitle = cardh5[i].outerText;
+    if (cardTitle.toUpperCase().indexOf(query) > -1) {
+      card[i].style.display = "";
+    } else {
+      card[i].style.display = "none";
+    }
+  }
+}
