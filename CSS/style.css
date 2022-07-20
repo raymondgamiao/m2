@@ -3,7 +3,15 @@
 :root {
   /*-----COLOR-----*/
   --color-background: #fff;
+
   /*-----STYLES-----*/
+  --bg-shadow: 4.1px 6.9px 8.2px -10px rgba(0, 0, 0, 0.021),
+    6.7px 11.3px 12.9px -10px rgba(0, 0, 0, 0.027),
+    9px 15.2px 17.1px -10px rgba(0, 0, 0, 0.031),
+    11.3px 19px 20.8px -10px rgba(0, 0, 0, 0.034),
+    13.5px 22.7px 24.2px -10px rgba(0, 0, 0, 0.039),
+    16px 27px 27px -10px rgba(0, 0, 0, 0.07);
+  --btn-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
 
   /*----- ANIMATION <if you want to put>-----*/
 }
@@ -59,6 +67,7 @@
 }
 
 
+
 /*Na Add ko CSS By Matt*/
 
 
@@ -95,3 +104,36 @@
   background: #191919;
   color: floralwhite;
 }
+=======
+/*-----CHAMPION.HTML-----*/
+div.g-col-6 {
+  width: 60%;
+}
+h1.title {
+  margin: 5px;
+  padding: 10px;
+}
+input.form1{
+  width: 50%;
+  margin-left: 20px;
+}
+.form1 {
+  margin-left: 10px;
+}
+.form1:hover {
+  box-shadow: var(--btn-shadow);
+}
+div.card {
+  box-shadow: var(--bg-shadow);
+}
+img.card-img-top {
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  border-radius: 1rem;
+}
+div#champions{
+  justify-content: center;
+  
+}
+
