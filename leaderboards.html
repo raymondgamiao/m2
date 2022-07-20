@@ -4,20 +4,53 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Leaderboards | Legend.GG</title>
     <!--===== LINKS =====-->
     <link rel="stylesheet" href="CSS/style.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
     />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Righteous&display=swap");
+      * {
+        font-family: "Montserrat", sans-serif;
+      }
+      .navbar-brand {
+        font-family: "Righteous", cursive;
+        font-size: 2rem;
+      }
+      h1 {
+        font-weight: 600;
+        color: #fff;
+      }
+      .contentwrapper {
+        min-height: 100vh;
+        background-color: rgb(20, 20, 51);
+        position: relative;
+      }
+      .searchbar {
+        padding: 5px;
+        background-color: white;
+        border-radius: 5px;
+      }
+      .search_input {
+        border: 0;
+        outline: 0;
+        background: none;
+      }
+      .search_icon {
+        color: black;
+        text-decoration: none;
+      }
+    </style>
     <!--=================-->
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg sticky-top px-md-5 bg-dark">
+  <body onload="getLeaderboard(document.getElementById('server').value)">
+    <nav class="navbar navbar-expand-lg sticky-top bg-dark px-md-5">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">RITO Companion</a>
+        <a class="navbar-brand" href="#">Legend.GG</a>
         <a
           class="navbar-toggler"
           type="button"
@@ -46,62 +79,74 @@
     </nav>
 
     <!-- The header content -->
-    <div class="container h-100">
+    <div class="container-fluid h-100 contentwrapper">
       <div class="row">
-        <div class="div col-12 text-center border">
+        <div class="div col-lg-8 mx-auto text-center py-5">
           <h1>Leaderboards</h1>
-          <div class="input-group mb-3">
-            <select
-              class="btn btn-outline-secondary dropdown-toggle"
-              type="button"
-              id="server"
-            >
-              <option value="br1">BR1</option>
-              <option value="eun1">EUN1</option>
-              <option value="euw1">EUW1</option>
-              <option value="jp1">JP1</option>
-              <option value="kr">KR</option>
-              <option value="la1">LA1</option>
-              <option value="la2">LA2</option>
-              <option value="na1">NA1</option>
-              <option value="oc1">OC1</option>
-              <option value="ru">RU</option>
-              <option value="tr1">TR1</option>
-            </select>
-            <select
-              class="btn btn-outline-secondary dropdown-toggle"
-              type="button"
-              id="range"
-            >
-              <option value="0">Show All</option>
-              <option value="10">Top 10</option>
-              <option value="50">top 50</option>
-              <option value="100">top 100</option>
-            </select>
-            <input
-              type="text"
-              class="form-control"
-              aria-label="Text input with dropdown button"
-            />
-          </div>
-          <div>
-            <button
-              class="btn btn-secondary"
-              onclick="getLeaderboard(document.getElementById('server').value);"
-            >
-              search
-            </button>
+          <div class="d-flex py-4 justify-content-between">
+            <div>
+              <select
+                type="button"
+                id="server"
+                onchange="getLeaderboard(this.value)"
+              >
+                <option value="br1">BR1</option>
+                <option value="eun1">EUN1</option>
+                <option value="euw1">EUW1</option>
+                <option value="jp1">JP1</option>
+                <option value="kr">KR</option>
+                <option value="la1">LA1</option>
+                <option value="la2">LA2</option>
+                <option value="na1" selected="selected">NA1</option>
+                <option value="oc1">OC1</option>
+                <option value="ru">RU</option>
+                <option value="tr1">TR1</option>
+              </select>
+              <select type="button" id="range">
+                <option value="200">Show All</option>
+                <option value="10" selected="selected">Top 10</option>
+                <option value="50">top 50</option>
+                <option value="100">top 100</option>
+              </select>
+            </div>
+            <div class="d-flex justify-content-center h-100">
+              <div class="searchbar">
+                <input
+                  class="search_input"
+                  type="text"
+                  name=""
+                  placeholder="Search..."
+                />
+                <a href="#" class="search_icon"
+                  ><i class="fas fa-search"></i
+                ></a>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-4 border">
-          <div id="summoners"></div>
+        <div class="col-lg-8 mx-auto">
+          <table
+            class="table table-hover table-primary table-striped text-start table-borderless mx-auto"
+          >
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Summoner</th>
+                <th>LP</th>
+                <th>Wins</th>
+                <th>Losses</th>
+              </tr>
+            </thead>
+            <tbody id="summoners"></tbody>
+          </table>
         </div>
-        <div class="col-8 border" id="summonerDetails"></div>
       </div>
     </div>
 
     <!--===== SCRIPT =====-->
+    <script src="js/config.js"></script>
     <script src="js/API.js"></script>
+
     <script
       src="https://kit.fontawesome.com/b4299c0961.js"
       crossorigin="anonymous"

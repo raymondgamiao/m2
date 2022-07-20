@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboards | Legend.GG</title>
+    <!--===== LINKS =====-->
+    <link rel="stylesheet" href="CSS/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Righteous&display=swap");
+      * {
+        font-family: "Montserrat", sans-serif;
+      }
+      .navbar-brand {
+        font-family: "Righteous", cursive;
+        font-size: 2rem;
+      }
+      h1 {
+        font-weight: 600;
+        color: #fff;
+      }
+      .contentwrapper {
+        min-height: 100vh;
+        background-color: rgb(20, 20, 51);
+        position: relative;
+      }
+      .searchbar {
+        padding: 5px;
+        background-color: white;
+        border-radius: 5px;
+      }
+      .search_input {
+        border: 0;
+        outline: 0;
+        background: none;
+      }
+      .search_icon {
+        color: black;
+        text-decoration: none;
+      }
+    </style>
+    <!--=================-->
+  </head>
+  <body>
+    <script>
+      const arr = window.location.href.split("?");
+      const query = arr[arr.length - 1];
+      const params = query.split("&");
+      const server = params[0].split("=")[1];
+      const puuid = params[1].split("=")[1];
+
+      window.onload(alert(server + " " + puuid));
+    </script>
+  </body>
+</html>

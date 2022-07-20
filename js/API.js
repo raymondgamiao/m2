@@ -1,4 +1,4 @@
-const riotKey = "RGAPI-6e871128-9830-41e2-b6c6-a834f6c13e56";
+const riotKey = config.riotKey;
 
 //populate champions
 async function getChampions() {
@@ -109,42 +109,32 @@ async function getLeaderboard(server) {
     `https://${server}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${riotKey}`
   );
   const data = await response.json();
-  console.log(data);
   //create leaderboard list
 
   //show range
   const end = document.getElementById("range").value;
 
-  let txt = "<ul class='list-unstyled'>";
+  let txt = "";
   //sort by league points from highest to lowest
   data.entries.sort((a, b) => {
     return b.leaguePoints - a.leaguePoints;
   });
-  if (end == "0") {
-    for (let i = 0; i < data.entries.length; i++) {
-      txt += `
-      <li onclick="getSummonerData('${server}',
-      '${data.entries[i].summonerName}',
-      '${data.entries[i].leaguePoints}',
-      '${data.entries[i].wins}',
-      '${data.entries[i].losses}',
-      )">`;
-      txt += `${data.entries[i].summonerName}, ${data.entries[i].leaguePoints}</li>`;
-    }
-  } else {
-    for (let i = 0; i < end; i++) {
-      txt += `
-      <li onclick="getSummonerData('${server}',
-      '${data.entries[i].summonerName}',
-      '${data.entries[i].leaguePoints}',
-      '${data.entries[i].wins}',
-      '${data.entries[i].losses}',
-      )">`;
-      txt += `${data.entries[i].summonerName}, ${data.entries[i].leaguePoints}</li>`;
-    }
+  for (let i = 0; i < end; i++) {
+    const response = await fetch(
+      `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${data.entries[i].summonerName}?api_key=${riotKey}`
+    );
+    const data2 = await response.json();
+    // console.log(data2);
+    txt += "<tr>";
+    txt += `<td>${i + 1}</td>`;
+    txt += `<td><img src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/profileicon/${data2.profileIconId}.png" width=30 height=30>`;
+    txt += `<a href="summoners.html?server=${server}&puuid=${data2.puuid}">`;
+    txt += `${data.entries[i].summonerName}</td>`;
+    txt += `<td>${data.entries[i].leaguePoints}</td>`;
+    txt += `<td>${data.entries[i].wins}</td>`;
+    txt += `<td>${data.entries[i].losses}</td>`;
+    txt += "</tr>";
   }
-
-  txt += "</ul>";
 
   //put list inside div
   document.getElementById("summoners").innerHTML = txt;
@@ -162,20 +152,47 @@ async function getSummonerData(
   );
   const data = await response.json();
   const puuid = data.puuid;
-
+  //AMERICAS routing value serves NA, BR, LAN and LAS
+  // ASIA routing value serves KR and JP.
+  //EUROPE routing value serves EUNE, EUW, TR, and RU
+  //SEA routing value serves OCE.
+  let region;
+  switch (server) {
+    case "na1":
+    case "br1":
+    case "la1":
+    case "la2":
+      region = "americas";
+      break;
+    case "kr":
+    case "jp1":
+      region = "asia";
+      break;
+    case "eun1":
+    case "euw1":
+    case "tr1":
+    case "ru":
+      region = "europe";
+      break;
+    case "oc1":
+      region = "sea";
+      break;
+  }
   const response2 = await fetch(
-    `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${riotKey}`
+    `https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${riotKey}`
   );
   const data2 = await response2.json();
 
   let txt = "";
-  txt += `<img src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/profileicon/588.png" />`;
+  txt += `<img src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/profileicon/${data.profileIconId}.png" />`;
   txt += `<h3>${summonerName}</h3>`;
-  txt += `<small>${data.summonerLevel}</small>`;
-  txt += `LP: ${leaguePoints} w:${wins} l: ${losses}<br />`;
-  txt += `matches:<br />`;
-  txt += data2;
+  txt += `<small>Level: ${data.summonerLevel}<br>`;
+  txt += `LP: ${leaguePoints} wins:${wins} losses: ${losses}<br />`;
+  txt += `matches:<br /></small>`;
+
+  for (let x in data2) {
+    txt += data2[x] + "<br />";
+  }
 
   document.getElementById("summonerDetails").innerHTML = txt;
-  //console.log(data2);
 }
