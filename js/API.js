@@ -7,8 +7,9 @@ async function getChampions() {
   const response = await fetch(link);
   let data = await response.json();
 
-  //create champion cards
-  let txt = "<div class='d-flex flex-wrap justify-content-start mx-auto'>";
+
+  let txt = "<div class='d-flex flex-wrap justify-content-center mx-auto'>";
+
   for (let x in data.data) {
     let imgSrc = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${x}.png`;
 
