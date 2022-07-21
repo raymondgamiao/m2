@@ -7,7 +7,6 @@ async function getChampions() {
   const response = await fetch(link);
   let data = await response.json();
 
-
   let txt = "<div class='d-flex flex-wrap justify-content-center mx-auto'>";
 
   for (let x in data.data) {
@@ -105,7 +104,7 @@ function searchItems() {
 //search Leaderboards
 
 //populate champions
-async function getLeaderboard(server) {
+async function getLeaderboard(server, page) {
   const response = await fetch(
     `https://${server}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${riotKey}`
   );
@@ -113,32 +112,42 @@ async function getLeaderboard(server) {
   //create leaderboard list
 
   //show range
-  const end = document.getElementById("range").value;
 
   let txt = "";
   //sort by league points from highest to lowest
   data.entries.sort((a, b) => {
     return b.leaguePoints - a.leaguePoints;
   });
-  for (let i = 0; i < end; i++) {
+
+  for (let i = page * 10 - 10; i < page * 10; i++) {
     const response = await fetch(
       `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${data.entries[i].summonerName}?api_key=${riotKey}`
     );
-    const data2 = await response.json();
-    // console.log(data2);
-    txt += "<tr>";
-    txt += `<td>${i + 1}</td>`;
-    txt += `<td><img src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/profileicon/${data2.profileIconId}.png" width=30 height=30>`;
-    txt += `<a href="summoners.html?server=${server}&puuid=${data2.puuid}">`;
-    txt += `${data.entries[i].summonerName}</td>`;
-    txt += `<td>${data.entries[i].leaguePoints}</td>`;
-    txt += `<td>${data.entries[i].wins}</td>`;
-    txt += `<td>${data.entries[i].losses}</td>`;
-    txt += "</tr>";
+    //console.log(response.status);
+    if (response.status == 200) {
+      const data2 = await response.json();
+      // console.log(data2);
+      txt += "<tr>";
+      txt += `<td>${i + 1}</td>`;
+      txt += `<td><img src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/profileicon/${data2.profileIconId}.png" width=30 height=30>`;
+      txt += `<a href="summoners.html?server=${server}&puuid=${data2.puuid}">`;
+      txt += `${data.entries[i].summonerName}</td>`;
+      txt += `<td>${Number(
+        data.entries[i].leaguePoints
+      ).toLocaleString()}</td>`;
+      txt += `<td>${data.entries[i].wins}</td>`;
+      txt += `<td>${data.entries[i].losses}</td>`;
+      txt += "</tr>";
+    } else if (response.status == 404) {
+      i++;
+    }
   }
-
   //put list inside div
   document.getElementById("summoners").innerHTML = txt;
+}
+
+function pagination(page) {
+  // alert(page);
 }
 
 async function getSummonerData(
@@ -197,3 +206,25 @@ async function getSummonerData(
 
   document.getElementById("summonerDetails").innerHTML = txt;
 }
+
+//pagination
+function pagination(server) {
+  for (i = 1; i <= 10; i++) {
+    //create li
+    const newLi = document.createElement("li");
+    newLi.classList.add("page-item");
+    //create a
+    const a = document.createElement("a");
+    const textNode = document.createTextNode(i);
+    a.appendChild(textNode);
+    a.classList.add("page-link");
+    a.href = "#";
+    a.setAttribute("onclick", "getLeaderboard(server, this.innerHTML)");
+    //insert a to li
+    newLi.appendChild(a);
+    //insert li>a to pagination
+    const pagination = document.getElementById("pagination");
+    pagination.insertBefore(newLi, pagination.children[i]);
+  }
+}
+pagination("na1");

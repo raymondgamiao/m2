@@ -11,6 +11,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
     />
+
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Righteous&display=swap");
       * {
@@ -44,10 +45,11 @@
         text-decoration: none;
       }
     </style>
+
     <!--=================-->
   </head>
 
-  <body onload="getLeaderboard(document.getElementById('server').value)">
+  <body onload="getLeaderboard(server, 1);">
     <nav class="navbar navbar-expand-lg sticky-top bg-dark px-md-5">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Legend.GG</a>
@@ -102,12 +104,6 @@
                 <option value="ru">RU</option>
                 <option value="tr1">TR1</option>
               </select>
-              <select type="button" id="range">
-                <option value="200">Show All</option>
-                <option value="10" selected="selected">Top 10</option>
-                <option value="50">top 50</option>
-                <option value="100">top 100</option>
-              </select>
             </div>
             <div class="d-flex justify-content-center h-100">
               <div class="searchbar">
@@ -124,9 +120,10 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 mx-auto">
+        <div class="col-lg-8 mx-auto bg-light">
           <table
             class="table table-hover table-primary table-striped text-start table-borderless mx-auto"
+            id="leaderboardTable"
           >
             <thead>
               <tr>
@@ -139,6 +136,25 @@
             </thead>
             <tbody id="summoners"></tbody>
           </table>
+          <nav>
+            <ul class="pagination justify-content-center" id="pagination">
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="#"
+                  aria-label="Previous"
+                  id="previous"
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" id="next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
@@ -146,7 +162,9 @@
     <!--===== SCRIPT =====-->
     <script src="js/config.js"></script>
     <script src="js/API.js"></script>
-
+    <script>
+      const server = document.getElementById("server").value;
+    </script>
     <script
       src="https://kit.fontawesome.com/b4299c0961.js"
       crossorigin="anonymous"
