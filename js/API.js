@@ -101,53 +101,128 @@ function searchItems() {
   }
 }
 
+//leaderboard pagination
+function paginationNew() {
+  for (i = 1; i <= 5; i++) {
+    //create li
+    const newLi = document.createElement("li");
+    if (i == 1) {
+      newLi.classList.add("active");
+    }
+    newLi.classList.add("page-item");
+    //create a
+    const a = document.createElement("a");
+    const textNode = document.createTextNode(i);
+    a.appendChild(textNode);
+    a.classList.add("page-link");
+    a.href = "#";
+    a.setAttribute(
+      "onclick",
+      `getLeaderboard(getLeaderboard( document.getElementById(server).value, ${i})`
+    );
+    //insert a to li
+    newLi.appendChild(a);
+    //insert li>a to pagination
+    const pagination = document.getElementById("pagination");
+    pagination.insertBefore(newLi, pagination.children[i]);
+  }
+}
+paginationNew();
 //search Leaderboards
 
 //populate champions
 async function getLeaderboard(server, page) {
-  const response = await fetch(
-    `https://${server}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${riotKey}`
-  );
+  //change server header
+  let serverHeader = "";
+  switch (server) {
+    case "na1":
+      serverHeader = "North America";
+      break;
+    case "br1":
+      serverHeader = "Brazil";
+      break;
+    case "la1":
+      serverHeader = "Latin America North";
+      break;
+    case "la2":
+      serverHeader = "Latin America South";
+      break;
+    case "kr":
+      serverHeader = "Korea";
+      break;
+    case "jp1":
+      serverHeader = "Japan";
+      break;
+    case "eun1":
+      serverHeader = "Europe Nordic & East";
+      break;
+    case "euw1":
+      serverHeader = "Europe West";
+      break;
+    case "tr1":
+      serverHeader = "Turkey";
+      break;
+    case "ru":
+      serverHeader = "Russia";
+      break;
+    case "oc1":
+      serverHeader = "Oceania";
+      break;
+  }
+  document.getElementById("serverHeader").innerText = serverHeader;
+
+  //get leaderboard list
+  let leaderboardLink = `https://${server}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${riotKey}`;
+  const response = await fetch(leaderboardLink);
   const data = await response.json();
-  //create leaderboard list
-
-  //show range
-
-  let txt = "";
+  console.log(data);
   //sort by league points from highest to lowest
   data.entries.sort((a, b) => {
     return b.leaguePoints - a.leaguePoints;
   });
-
+  let txt = "";
   for (let i = page * 10 - 10; i < page * 10; i++) {
-    const response = await fetch(
-      `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${data.entries[i].summonerName}?api_key=${riotKey}`
-    );
-    //console.log(response.status);
-    if (response.status == 200) {
-      const data2 = await response.json();
-      // console.log(data2);
-      txt += "<tr>";
-      txt += `<td>${i + 1}</td>`;
-      txt += `<td><img src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/profileicon/${data2.profileIconId}.png" width=30 height=30>`;
-      txt += `<a href="summoners.html?server=${server}&puuid=${data2.puuid}">`;
-      txt += `${data.entries[i].summonerName}</td>`;
-      txt += `<td>${Number(
-        data.entries[i].leaguePoints
-      ).toLocaleString()}</td>`;
-      txt += `<td>${data.entries[i].wins}</td>`;
-      txt += `<td>${data.entries[i].losses}</td>`;
-      txt += "</tr>";
-    } else if (response.status == 404) {
-      i++;
-    }
+    let summonerLink = `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/${data.entries[i].summonerId}?api_key=${riotKey}`;
+    //let summonerLink = `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${data.entries[i].summonerName}?api_key=${riotKey}`;
+    const response2 = await fetch(summonerLink);
+    const data2 = await response2.json();
+    console.log(data2);
+    //create table rows
+    txt += "<tr>";
+    txt += `<td class="text-center rank">${i + 1}</td>`;
+    txt += `<td class="summonerName"><img src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/profileicon/${data2.profileIconId}.png" width=30 height=30>`;
+    txt += `<a href="summoners.html?server=${server}&puuid=${data2.puuid}">`;
+    txt += `${data.entries[i].summonerName}</td>`;
+    txt += `<td>${Number(data.entries[i].leaguePoints).toLocaleString()}</td>`;
+    let totalMatch = data.entries[i].wins + data.entries[i].losses;
+    let winrate = (data.entries[i].wins / totalMatch) * 100;
+    txt += `<td>
+      <div class="d-flex justify-content-center">
+        <span class="winrate me-3">${winrate.toFixed()}%</span><small><muted>
+        ${data.entries[i].wins}W ${data.entries[i].losses}L 
+        </muted><small>
+      </div>
+      <div class="progress mx-md-5">
+        <div class="progress-bar" 
+          role="progressbar" 
+          style="width: ${winrate}%;" 
+          aria-valuenow="${winrate}" 
+          aria-valuemin="0" 
+          aria-valuemax="100"
+        ></div>
+      </div>
+      </td>`;
+    // txt += `<td>${data.entries[i].losses}</td>`;
+    txt += "</tr>";
   }
-  //put list inside div
+  //insert data into table
   document.getElementById("summoners").innerHTML = txt;
-}
 
-function pagination(page) {
-  // alert(page);
+  //change active page
+  let activePage = document.querySelector("li.active");
+  let newPage = document.querySelectorAll("li.page-item");
+  activePage.classList.remove("active");
+  newPage[page].classList.add("active");
 }
 
 async function getSummonerData(
@@ -206,25 +281,3 @@ async function getSummonerData(
 
   document.getElementById("summonerDetails").innerHTML = txt;
 }
-
-//pagination
-function pagination(server) {
-  for (i = 1; i <= 10; i++) {
-    //create li
-    const newLi = document.createElement("li");
-    newLi.classList.add("page-item");
-    //create a
-    const a = document.createElement("a");
-    const textNode = document.createTextNode(i);
-    a.appendChild(textNode);
-    a.classList.add("page-link");
-    a.href = "#";
-    a.setAttribute("onclick", "getLeaderboard(server, this.innerHTML)");
-    //insert a to li
-    newLi.appendChild(a);
-    //insert li>a to pagination
-    const pagination = document.getElementById("pagination");
-    pagination.insertBefore(newLi, pagination.children[i]);
-  }
-}
-pagination("na1");

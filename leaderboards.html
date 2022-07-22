@@ -23,6 +23,12 @@
       }
       h1 {
         font-weight: 600;
+        font-size: 3rem;
+        color: #fff;
+      }
+      h2 {
+        font-weight: 400;
+        font-size: 1.5rem;
         color: #fff;
       }
       .contentwrapper {
@@ -30,26 +36,129 @@
         background-color: rgb(20, 20, 51);
         position: relative;
       }
-      .searchbar {
+      .userInputWrapper {
         padding: 5px;
+
         background-color: white;
         border-radius: 5px;
       }
-      .search_input {
+      .userInput {
         border: 0;
         outline: 0;
         background: none;
       }
+
       .search_icon {
         color: black;
         text-decoration: none;
+      }
+      .userInput option {
+        background-color: red;
+      }
+
+      .pagination-outer {
+        text-align: center;
+      }
+      .pagination {
+        font-family: "Ubuntu", sans-serif;
+        display: inline-flex;
+        position: relative;
+      }
+      .pagination li a.page-link {
+        color: #fff;
+        background: #4b6584;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 34px;
+        height: 36px;
+        width: 36px;
+        padding: 0;
+        margin: 0 7px;
+        border: none;
+        border-radius: 3px;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease 0s;
+      }
+      .pagination li a.page-link:hover,
+      .pagination li a.page-link:focus,
+      .pagination li.active a.page-link:hover,
+      .pagination li.active a.page-link {
+        color: #fff;
+        background: transparent;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+      .pagination li a.page-link:before,
+      .pagination li a.page-link:after {
+        content: "";
+        background: linear-gradient(#4b6584 50%, #eb3b5a 50%);
+        height: 200%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        transition: all 0.4s ease 0s;
+      }
+      .pagination li a.page-link:after {
+        opacity: 0;
+        transform: scale(0.1);
+        top: -50%;
+        transition: all 0.4s ease 0.2s;
+      }
+      .pagination li a.page-link:hover:before,
+      .pagination li a.page-link:focus:before,
+      .pagination li.active a.page-link:hover:before,
+      .pagination li.active a.page-link:before {
+        opacity: 0;
+        transform: scale(0.1);
+        top: -50%;
+      }
+      .pagination li a.page-link:hover:after,
+      .pagination li a.page-link:focus:after,
+      .pagination li.active a.page-link:hover:after,
+      .pagination li.active a.page-link:after {
+        opacity: 1;
+        transform: scale(1);
+        top: -100%;
+      }
+      @media only screen and (max-width: 480px) {
+        .pagination {
+          font-size: 0;
+          display: inline-block;
+        }
+        .pagination li {
+          display: inline-block;
+          vertical-align: top;
+          margin: 0 0 15px;
+        }
+      }
+      .summonerName a {
+        color: #ffffff;
+        text-decoration: none;
+        margin-left: 10px;
+      }
+      .summonerName a:hover {
+        color: #eb3b5a;
+      }
+      .rank {
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .progress {
+        height: 8px;
+      }
+      .winrateTH {
+        max-width: 175px;
       }
     </style>
 
     <!--=================-->
   </head>
 
-  <body onload="getLeaderboard(server, 1);">
+  <body onload="getLeaderboard(server,1);">
     <nav class="navbar navbar-expand-lg sticky-top bg-dark px-md-5">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Legend.GG</a>
@@ -83,14 +192,16 @@
     <!-- The header content -->
     <div class="container-fluid h-100 contentwrapper">
       <div class="row">
-        <div class="div col-lg-8 mx-auto text-center py-5">
-          <h1>Leaderboards</h1>
-          <div class="d-flex py-4 justify-content-between">
+        <div class="div col-lg-8 mx-auto text-center">
+          <h1 class="pt-5">Leaderboards</h1>
+          <h2 class="pb-5" id="serverHeader">North America</h2>
+          <div class="d-flex justify-content-between pb-3">
             <div>
               <select
                 type="button"
+                class="form-select"
                 id="server"
-                onchange="getLeaderboard(this.value)"
+                onchange="getLeaderboard(this.value, 1)"
               >
                 <option value="br1">BR1</option>
                 <option value="eun1">EUN1</option>
@@ -106,9 +217,9 @@
               </select>
             </div>
             <div class="d-flex justify-content-center h-100">
-              <div class="searchbar">
+              <div class="userInputWrapper">
                 <input
-                  class="search_input"
+                  class="userInput"
                   type="text"
                   name=""
                   placeholder="Search..."
@@ -120,24 +231,24 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 mx-auto bg-light">
+        <div class="col-lg-8 mx-auto">
           <table
-            class="table table-hover table-primary table-striped text-start table-borderless mx-auto"
+            class="table table-dark table-striped text-start table-borderless mx-auto"
             id="leaderboardTable"
           >
             <thead>
               <tr>
-                <th>Rank</th>
+                <th class="text-center">Rank</th>
                 <th>Summoner</th>
                 <th>LP</th>
-                <th>Wins</th>
-                <th>Losses</th>
+                <th class="text-center winrateTH">Win rate</th>
+                <!--  <th>Losses</th> -->
               </tr>
             </thead>
             <tbody id="summoners"></tbody>
           </table>
-          <nav>
-            <ul class="pagination justify-content-center" id="pagination">
+          <nav class="pagination-outer">
+            <ul class="pagination" id="pagination">
               <li class="page-item">
                 <a
                   class="page-link"
