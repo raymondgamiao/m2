@@ -118,7 +118,7 @@ function paginationNew() {
     a.href = "#";
     a.setAttribute(
       "onclick",
-      `getLeaderboard(getLeaderboard( document.getElementById(server).value, ${i})`
+      `getLeaderboard(document.getElementById('server').value, ${i})`
     );
     //insert a to li
     newLi.appendChild(a);
@@ -170,7 +170,17 @@ async function getLeaderboard(server, page) {
       break;
   }
   document.getElementById("serverHeader").innerText = serverHeader;
-
+  //show spinner while loading
+  let loader = `
+    <tr>
+      <td colspan="4" class="text-center">
+        <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+      </td>
+    </tr>
+    `;
+  document.getElementById("summoners").innerHTML = loader;
   //get leaderboard list
   let leaderboardLink = `https://${server}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${riotKey}`;
   const response = await fetch(leaderboardLink);
@@ -199,7 +209,9 @@ async function getLeaderboard(server, page) {
     txt += `<td>
       <div class="d-flex justify-content-center">
         <span class="winrate me-3">${winrate.toFixed()}%</span><small><muted>
+        <span class="winsLoss">
         ${data.entries[i].wins}W ${data.entries[i].losses}L 
+        </span>
         </muted><small>
       </div>
       <div class="progress mx-md-5">
