@@ -197,3 +197,10 @@ async function getSummonerData(
 
   document.getElementById("summonerDetails").innerHTML = txt;
 }
+
+// adding tooltip on js file 
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})

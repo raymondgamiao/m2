@@ -72,8 +72,6 @@
 
 
 /*brand css*/
-
-
 .has-scrollbar{
   display: flex;
   gap: 100px;
@@ -104,6 +102,377 @@
   background: #191919;
   color: floralwhite;
 }
+
+
+
+/*footer*/
+.site-footer
+{
+  background-color:#26272b;
+  padding:45px 0 20px;
+  font-size:15px;
+  line-height:24px;
+  color:#737373;
+}
+.site-footer hr
+{
+  border-top-color:#bbb;
+  opacity:0.5
+}
+.site-footer hr.small
+{
+  margin:20px 0
+}
+.site-footer h6
+{
+  color:#fff;
+  font-size:16px;
+  text-transform:uppercase;
+  margin-top:5px;
+  letter-spacing:2px
+}
+.site-footer a
+{
+  color:#737373;
+}
+.site-footer a:hover
+{
+  color:#d753ff;
+  text-decoration:none;
+}
+.footer-links
+{
+  padding-left:0;
+  list-style:none
+}
+.footer-links li
+{
+  display:block
+}
+.footer-links a
+{
+  color:#737373
+}
+.footer-links a:active,.footer-links a:focus,.footer-links a:hover
+{
+  color:#d753ff;
+  text-decoration:none;
+}
+.footer-links.inline li
+{
+  display:inline-block
+}
+.site-footer .social-icons
+{
+  text-align:right
+}
+.site-footer .social-icons a
+{
+  width:40px;
+  height:40px;
+  line-height:40px;
+  margin-left:6px;
+  margin-right:0;
+  border-radius:100%;
+  background-color:#33353d
+}
+.copyright-text
+{
+  margin:0
+}
+@media (max-width:991px)
+{
+  .site-footer [class^=col-]
+  {
+    margin-bottom:30px
+  }
+}
+@media (max-width:767px)
+{
+  .site-footer
+  {
+    padding-bottom:0
+  }
+  .site-footer .copyright-text,.site-footer .social-icons
+  {
+    text-align:center
+  }
+}
+.social-icons
+{
+  padding-left:0;
+  margin-bottom:0;
+  list-style:none
+}
+.social-icons li
+{
+  display:inline-block;
+  margin-bottom:4px
+}
+.social-icons li.title
+{
+  margin-right:15px;
+  text-transform:uppercase;
+  color:#96a2b2;
+  font-weight:700;
+  font-size:13px
+}
+.social-icons a{
+  background-color:#eceeef;
+  color:#818a91;
+  font-size:16px;
+  display:inline-block;
+  line-height:44px;
+  width:44px;
+  height:44px;
+  text-align:center;
+  margin-right:8px;
+  border-radius:100%;
+  -webkit-transition:all .2s linear;
+  -o-transition:all .2s linear;
+  transition:all .2s linear
+}
+.social-icons a:active,.social-icons a:focus,.social-icons a:hover
+{
+  color:#fff;
+  background-color:#29aafe
+}
+.social-icons.size-sm a
+{
+  line-height:34px;
+  height:34px;
+  width:34px;
+  font-size:14px
+}
+.social-icons a.facebook:hover
+{
+  background-color:#d753ff
+}
+.social-icons a.twitter:hover
+{
+  background-color:#d753ff
+}
+.social-icons a.instagram:hover
+{
+  background-color:#d753ff
+}
+.social-icons a.github:hover
+{
+  background-color:#d753ff
+}
+@media (max-width:767px)
+{
+  .social-icons li.title
+  {
+    display:block;
+    margin-right:0;
+    font-weight:600
+  }
+}
+
+
+
+/*Example Tooltip*/
+
+
+
+
+/*Example Inline Items Lits*/
+.section-1-wrapper{
+  width: 70%;
+  margin: auto;
+}
+.section-1 h1{
+  width: 500px;
+  color: #FEC53A;
+  font-size: 1.5rem;
+  position: relative;
+  font-weight: 400;
+}
+.section-1-img{
+  display: flex;
+}
+.section-1-img .img{
+  width: 100px;
+  height: 130px;
+  background: red;
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+.section-1-img .img-2{
+  background: red;
+  background-size: cover;
+  background-position: center;
+}
+.section-1-img  .img-3{
+  background: red;
+  background-size: cover;
+  background-position: center;
+}
+.section-1-img  .img-4{
+  background: red;
+  background-size: cover;
+  background-position: center;
+}
+.section-1-img  .img-5{
+  background: red;
+  background-size: cover;
+  background-position: center;
+}
+.section-1-img  .img-6{
+  background: red;
+  background-size: cover;
+  background-position: center;
+}
+.img:hover{
+  transform: translateY(-10px);
+}
+
+/*Example item card CSS*/
+.card {
+  margin: 10px;
+  color: #191919;
+}
+
+
+/*Example Insiteitem CSS*/
+
+.container-1 {
+  background-color: #33353d;
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  grid-template-areas: 
+  "header header header header"
+  "sideleft main main sideright"
+  "sideleft main main sideright"
+}
+
+.grid-header{
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #191919;
+  color: #f5f5f5;
+  grid-area: header;
+}
+
+.grid-sideleft{
+  padding: 20px;
+  background-color: #191919;
+  color: #f5f5f5;
+  grid-area: sideleft;
+}
+
+.grid-main{
+  padding: 20px;
+  background-color: #191919;
+  color: #f5f5f5;
+  grid-area: main;
+}
+.grid-sideright{
+  padding: 20px;
+  background-color: #191919;
+  color: #f5f5f5;
+  grid-area: sideright;
+}
+
+@media only screen and (max-width: 800px){ 
+  .container-1 {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+      grid-template-areas: "header""main""sideleft""sideright";
+  }
+  
+}
+
+/*Example tooltip CSS*/
+
+
+/*Example item build hierarchy CSS*/
+
+.tree ul {
+	padding-top: 20px; position: relative;
+}
+
+.tree li {
+	float: left; text-align: center;
+	list-style-type: none;
+	position: relative;
+	padding: 20px 5px 0 5px;
+}
+
+/*We will use ::before and ::after to draw the connectors*/
+
+.tree li::before, .tree li::after{
+	content: '';
+	position: absolute; top: 0; right: 50%;
+	border-top: 3px solid #f5f5f5;
+	width: 50%; height: 10px;
+}
+.tree li::after{
+	right: auto; left: 50%;
+	border-left: 3px solid #f5f5f5;
+}
+
+/*We need to remove left-right connectors from elements without 
+any siblings*/
+.tree li:only-child::after, .tree li:only-child::before {
+	display: none;
+}
+
+/*Remove space from the top of single children*/
+.tree li:only-child{ padding-top: 0;}
+
+/*Remove left connector from first child and 
+right connector from last child*/
+.tree li:first-child::before, .tree li:last-child::after{
+	border: 0 none;
+}
+/*Adding back the vertical connector to the last nodes*/
+.tree li:last-child::before{
+	border-right: 3px solid #f5f5f5;
+	border-radius: 0 5px 0 0;
+	-webkit-border-radius: 0 5px 0 0;
+	-moz-border-radius: 0 5px 0 0;
+}
+.tree li:first-child::after{
+	border-radius: 5px 0 0 0;
+	-webkit-border-radius: 5px 0 0 0;
+	-moz-border-radius: 5px 0 0 0;
+}
+
+/*Time to add downward connectors from parents*/
+.tree ul ul::before{
+	content: '';
+	position: absolute; top: 0; left: 50%;
+	border-left: 3px solid #f5f5f5;
+	width: 0; height: 20px;
+}
+
+.tree li a{
+	border: 3px solid #f5f5f5;
+	padding: 5px 10px;
+	text-decoration: none;
+	color: #f5f5f5;
+	display: inline-block;
+	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+
+
+
+
 =======
 /*-----CHAMPION.HTML-----*/
 div.g-col-6 {
