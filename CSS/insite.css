@@ -129,3 +129,20 @@ a.prev:hover {
   letter-spacing: .25rem;
   box-shadow: 0 0 15px color(#d753ff);
 }
+.footer-top {
+  padding-top: 90px;
+  padding-bottom: 90px;
+  background-color: var(--dark);
+}
+
+.footer-top a {
+  color: var(--body);
+}
+
+.footer-top a:hover {
+  color: var(--white);
+}
+
+.footer-bottom {
+  background-color: #242933;
+}
