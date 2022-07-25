@@ -270,65 +270,44 @@
   }
 }
 
-
+/*Example Main Item CSS*/
+.text-item{
+  margin-top: 100px;
+}
 
 /*Example Tooltip*/
 
 
 
+/*Example items all*/
 
-/*Example Inline Items Lits*/
-.section-1-wrapper{
-  width: 70%;
-  margin: auto;
+.item-list {
+  padding: 24px 24px 12px;
+  border-radius: 6px;
+  background-color: #070786;
+  margin-bottom: 24px;
 }
-.section-1 h1{
-  width: 500px;
-  color: #FEC53A;
-  font-size: 1.5rem;
-  position: relative;
-  font-weight: 400;
+.item-container img {
+  margin-right: 12px;
+  margin-bottom: 12px;
+  border: 3px solid #ffffff;
+  padding: 1px;
+  border-radius: 5px;
 }
-.section-1-img{
+.item-name {
   display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 12px;
+  margin-bottom: 24px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
 }
-.section-1-img .img{
-  width: 100px;
-  height: 130px;
-  background: red;
-  background-size: cover;
-  background-position: center;
-  margin-right: 10px;
-  border-radius: 10px;
-}
-.section-1-img .img-2{
-  background: red;
-  background-size: cover;
-  background-position: center;
-}
-.section-1-img  .img-3{
-  background: red;
-  background-size: cover;
-  background-position: center;
-}
-.section-1-img  .img-4{
-  background: red;
-  background-size: cover;
-  background-position: center;
-}
-.section-1-img  .img-5{
-  background: red;
-  background-size: cover;
-  background-position: center;
-}
-.section-1-img  .img-6{
-  background: red;
-  background-size: cover;
-  background-position: center;
-}
-.img:hover{
-  transform: translateY(-10px);
-}
+
+
+
 
 /*Example item card CSS*/
 .card {
@@ -355,6 +334,7 @@
 .grid-header{
   margin-top: 30px;
   padding: 20px;
+  border-radius: 15px;
   background-color: #191919;
   color: #f5f5f5;
   grid-area: header;
@@ -362,6 +342,7 @@
 
 .grid-sideleft{
   padding: 20px;
+  border-radius: 15px;
   background-color: #191919;
   color: #f5f5f5;
   grid-area: sideleft;
@@ -369,12 +350,14 @@
 
 .grid-main{
   padding: 20px;
+  border-radius: 15px;
   background-color: #191919;
   color: #f5f5f5;
   grid-area: main;
 }
 .grid-sideright{
   padding: 20px;
+  border-radius: 15px;
   background-color: #191919;
   color: #f5f5f5;
   grid-area: sideright;
@@ -473,7 +456,7 @@ right connector from last child*/
 
 
 
-=======
+
 /*-----CHAMPION.HTML-----*/
 div.g-col-6 {
   width: 60%;
