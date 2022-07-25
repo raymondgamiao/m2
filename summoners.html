@@ -16,10 +16,29 @@
       * {
         font-family: "Montserrat", sans-serif;
       }
-
+      body {
+        background-color: #141433;
+        color: #ffffff;
+      }
+      #profile {
+        background-position: 0 15%;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      #summName {
+        font-family: "Righteous", cursive;
+      }
       .navbar-brand {
         font-family: "Righteous", cursive;
         font-size: 2rem;
+      }
+      .team1,
+      .team2 {
+        font-size: x-small;
+        width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     </style>
     <!--=================-->
@@ -59,46 +78,56 @@
     <!-- The header content -->
     <div class="container h-100 contentwrapper">
       <div class="row">
-        <div class="col-12 border d-flex flex-wrap" id="profile">
-          <img
-            id="pfp"
-            src="media/img/Loading_icon.gif"
-            alt=""
-            width="100"
-            height="100"
-            class="rounded-circle img-thumbnail"
-          />
-          <h1 id="summName">100 Sword</h1>
-
-          <img
-            id="rankIcon"
-            src="media/img/Loading_icon.gif"
-            alt=""
-            width="100"
-            height="100"
-          />
-          <div class="d-flex flex-column text-center" id="summStats">
-            <h4>CHALLENGER | 1563 LP</h4>
-            <h5>253 wins | 179 losses</h5>
+        <div class="col-12 d-flex flex-wrap rounded py-3 my-5" id="profile">
+          <div class="d-flex flex-row align-items-center">
+            <img
+              id="pfp"
+              src="media/img/Loading_icon.gif"
+              alt=""
+              width="100"
+              height="100"
+              class="rounded img-thumbnail"
+            />
+            <h1 id="summName" class="ps-3">100 Sword</h1>
           </div>
         </div>
-        <div class="col-12 col-md-4 border text-center p-3" id="bestChamps">
-          <h3>Favorite Champions</h3>
-          <img
-            src="media/img/Loading_icon.gif"
-            alt=""
-            width="100"
-            height="100"
-          />
+        <div class="col-12 col-lg-4 p-0">
+          <div class="d-flex flex-row p-3 rounded bg-dark align-items-center">
+            <img
+              id="rankIcon"
+              src="media/img/Loading_icon.gif"
+              alt=""
+              width="100"
+              height="100"
+            />
+            <div
+              class="d-flex flex-column text-center rounded align-items-center"
+              id="summStats"
+            >
+              <p>CHALLENGER | 1563 LP</p>
+              <p>253 wins | 179 losses</p>
+            </div>
+          </div>
+          <div id="bestChamps" class="p-3 rounded mt-3 bg-dark">
+            <img
+              src="media/img/Loading_icon.gif"
+              alt=""
+              width="100"
+              height="100"
+            />
+          </div>
         </div>
-        <div class="col-12 col-md-8 border text-center p-3" id="matchHistory">
-          <h3>Match History</h3>
-          <img
-            src="media/img/Loading_icon.gif"
-            alt=""
-            width="100"
-            height="100"
-          />
+        <div class="col-12 col-lg-8 text-center p-0 px-lg-3 pt-lg-0 pt-3">
+          <div class="bg-dark rounded p-3" id="matchHistory">
+            <h3>Match History</h3>
+            <img
+              src="media/img/Loading_icon.gif"
+              alt=""
+              width="100"
+              height="100"
+              id="loadingGif"
+            />
+          </div>
         </div>
       </div>
     </div>

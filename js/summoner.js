@@ -57,8 +57,8 @@ async function profile() {
 
   //summ stats
   let summStats = "";
-  summStats += `<h4>${data2[0].tier} | ${data2[0].leaguePoints} LP</h4>`;
-  summStats += `<h5>${data2[0].wins} wins | ${data2[0].losses} losses</h5>`;
+  summStats += `<p class="m-0">${data2[0].tier} | ${data2[0].leaguePoints} LP</p>`;
+  summStats += `<small>${data2[0].wins} wins | ${data2[0].losses} losses</small>`;
   document.getElementById("summStats").innerHTML = summStats;
 }
 profile();
@@ -80,128 +80,278 @@ async function bestChamps() {
   const data2 = await response2.json();
 
   let result = data2.data;
-  let txt = "<h3>Best Champions</h3>";
+  let txt = "<h3 class='text-center'>Best Champions</h3>";
   //get top 10 entries
+  let img = "";
+  let imgBanner = ""; //top hero's name for the banner
   for (i = 0; i < 10; i++) {
     for (const champs in result) {
       if (data[i].championId == result[champs].key) {
-        txt += result[champs].name + " - ";
+        let img = result[champs].name;
+        let imgSplit = "";
+        if (img.indexOf(" ") >= 0) {
+          imgSplit = img.split(" ");
+          imgSrc = imgSplit[0] + imgSplit[1];
+        } else if (img.indexOf("'") >= 0) {
+          imgSplit = img.split("'");
+          imgSrc = imgSplit[0] + imgSplit[1];
+        } else {
+          imgSrc = img;
+        }
+        console.log(imgSrc);
+
+        txt += `<img 
+        src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${imgSrc}.png" 
+        width='30'
+        height='30'
+        />`;
+        txt += `<span class="champName">` + result[champs].name + "</span> - ";
         txt += "Level: " + data[i].championLevel;
         txt += " pts: " + data[i].championPoints;
         txt += "<br />";
+        if (i == 0) {
+          imgBanner = result[champs].name;
+        }
       }
     }
   }
+  document.getElementById("bestChamps").innerHTML = txt;
+
+  document.getElementById("profile").setAttribute(
+    "style",
+    `background-image: 
+    linear-gradient(to right top, 
+      #d16ba5ff, 
+      #c777b9ee, 
+      #ba83cadd, 
+      #aa8fd8dd, 
+      #9a9ae1cc, 
+      #8aa7eccc, 
+      #79b3f4bb, 
+      #69bff8bb, 
+      #52cffeaa, 
+      #41dfffaa, 
+      #46eefaaa, 
+      #5ffbf1aa     
+      ), url("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${imgBanner}_0.jpg")`
+  );
+
   document.getElementById("bestChamps").innerHTML = txt;
 }
 bestChamps();
 
 async function matchHistory() {
   //Get a list of match ids by puuid
-  let link = `https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=5&api_key=${riotKey}`;
+  let link = `https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${riotKey}`;
   const response = await fetch(link);
   const matchList = await response.json();
 
-  let txt = "<h3>Match History</h3>";
   for (x of matchList) {
     //Get a list of match ids by puuid
     let link2 = `https://${region}.api.riotgames.com/lol/match/v5/matches/${x}/?api_key=${riotKey}`;
     const response2 = await fetch(link2);
     const matchData = await response2.json();
 
-    txt += matchData.info.gameMode + ", ";
-    txt += new Date(matchData.info.gameCreation).toLocaleDateString("en-US"); //date
+    //remove loading gif
+    document
+      .getElementById("loadingGif")
+      .setAttribute("style", "display: none");
+    //match history wrapper
+    const matchHistory = document.getElementById("matchHistory");
+    //per match wrapper
+    const wrapper = document.createElement("div");
+    wrapper.classList.add(
+      "d-flex",
+      "flex-row",
+      "justify-content-evenly",
+      "align-items-center",
+      "mb-3",
+      "p-3",
+      "rounded"
+    );
+    matchHistory.appendChild(wrapper);
+
+    //player icon
+    const playerIcon = document.createElement("img");
+
+    playerIcon.width = 100;
+    playerIcon.height = 100;
+
+    //match info
+    const matchInfo = document.createElement("div");
+    matchInfo.classList.add("d-flex", "flex-column");
+    const gameMode = document.createElement("span");
+    gameMode.innerText = matchData.info.gameMode;
+    const gameCreation = document.createElement("span");
+    gameCreation.innerText = new Date(
+      matchData.info.gameCreation
+    ).toLocaleDateString("en-US");
+    matchInfo.appendChild(gameMode);
+    matchInfo.appendChild(gameCreation);
+
+    //append elements into div
+    wrapper.appendChild(playerIcon);
+    wrapper.appendChild(matchInfo);
+
+    //win or lose
+    const winLoseWrapper = document.createElement("span");
+    const winLose = document.createElement("span");
+
     for (let x in matchData.info.participants) {
       //get match details of player
       let player = matchData.info.participants[x];
+      let img = matchData.info.participants[x].championName;
+      playerIcon.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
+        .split(" ")
+        .join("")}.png`;
+
       if (
         player.summonerName == document.getElementById("summName").innerText
       ) {
         let team = player.teamId;
+        //victory or defeat
         for (const x of matchData.info.teams) {
           if (x.teamId == team) {
             if (x.win) {
-              txt += " player won";
+              winLose.innerText = "VICTORY";
+              wrapper.classList.add("bg-success");
             } else {
-              txt += " player lost";
+              wrapper.classList.add("bg-danger");
+              winLose.innerText = "DEFEAT";
             }
           }
         }
+        winLoseWrapper.appendChild(winLose);
+        wrapper.appendChild(winLoseWrapper);
+        // txt += "<br /> " + player.summonerName;
+        // txt += "<br />" + player.championName;
+        //kda
+        const kda = document.createElement("div");
+        kda.innerText += player.kills + "/";
+        kda.innerText += player.deaths + "/";
+        kda.innerText += player.assists + "/";
+        winLoseWrapper.appendChild(kda);
 
-        txt += "<br /> " + player.summonerName;
-        txt += "<br />" + player.championName;
-        txt += "<br />kda: ";
-        txt += player.kills + "/";
-        txt += player.deaths + "/";
-        txt += player.assists + "<br />";
+        //items
+        const itemsWrapper = document.createElement("div");
+        const itemsTop = document.createElement("div");
+        itemsTop.classList.add("text-start");
+        const itemsBottom = document.createElement("div");
+        itemsBottom.classList.add("text-start");
+        itemsWrapper.appendChild(itemsTop);
+        itemsWrapper.appendChild(itemsBottom);
+        wrapper.appendChild(itemsWrapper);
         let itemLink =
           "http://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/";
+        //individual items
         if (player.item0 !== 0) {
-          txt += `<img src="${itemLink + player.item0}.png" />`;
+          const img = document.createElement("img");
+          img.src = itemLink + player.item0 + ".png";
+          img.height = 20;
+          img.width = 20;
+          itemsTop.appendChild(img);
         }
         if (player.item1 !== 0) {
-          txt += `<img src="${itemLink + player.item1}.png" />`;
+          const img = document.createElement("img");
+          img.src = itemLink + player.item1 + ".png";
+          img.height = 20;
+          img.width = 20;
+          itemsTop.appendChild(img);
         }
         if (player.item2 !== 0) {
-          txt += `<img src="${itemLink + player.item2}.png" />`;
+          const img = document.createElement("img");
+          img.src = itemLink + player.item2 + ".png";
+          img.height = 20;
+          img.width = 20;
+          itemsTop.appendChild(img);
         }
         if (player.item3 !== 0) {
-          txt += `<img src="${itemLink + player.item3}.png" />`;
+          const img = document.createElement("img");
+          img.src = itemLink + player.item3 + ".png";
+          img.height = 20;
+          img.width = 20;
+          itemsTop.appendChild(img);
         }
         if (player.item4 !== 0) {
-          txt += `<img src="${itemLink + player.item4}.png" />`;
+          const img = document.createElement("img");
+          img.src = itemLink + player.item4 + ".png";
+          img.height = 20;
+          img.width = 20;
+          itemsBottom.appendChild(img);
         }
         if (player.item5 !== 0) {
-          txt += `<img src="${itemLink + player.item5}.png" />`;
+          const img = document.createElement("img");
+          img.src = itemLink + player.item5 + ".png";
+          img.height = 20;
+          img.width = 20;
+          itemsBottom.appendChild(img);
         }
         if (player.item6 !== 0) {
-          txt += `<img src="${itemLink + player.item6}.png" />`;
+          const img = document.createElement("img");
+          img.src = itemLink + player.item6 + ".png";
+          img.height = 20;
+          img.width = 20;
+          itemsBottom.appendChild(img);
         }
-
-        txt += "<br /><br />";
       }
     }
-    //if team 1
-    txt += " team 1: ";
-    console.log(matchData.info);
+
+    //team 1
+    const team1 = document.createElement("div");
+    team1.classList.add("team1", "d-flex", "flex-column", "text-start");
+
     if (matchData.info.teams[0].win) {
-      txt += "win";
+      team1.append("win");
     } else {
-      txt += "lose";
+      team1.append("lose");
     }
     for (let x in matchData.info.participants) {
+      const players = document.createElement("span");
       if (matchData.info.participants[x].teamId == 100) {
-        txt += "<br />" + matchData.info.participants[x].championName;
-        txt += " " + matchData.info.participants[x].summonerName;
+        let img = matchData.info.participants[x].championName;
+        const playersImg = document.createElement("img");
+        playersImg.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
+          .split(" ")
+          .join("")}.png`;
+        playersImg.width = 20;
+        playersImg.height = 20;
+        const playersName = document.createElement("a");
+        playersName.innerHTML = matchData.info.participants[x].summonerName;
+        players.appendChild(playersImg);
+        players.appendChild(playersName);
       }
+      team1.appendChild(players);
     }
-    txt += "<br/><br/>";
-    //if team 2
-    txt += " team 2:";
+    wrapper.appendChild(team1);
+
+    //team 2
+    const team2 = document.createElement("div");
+    team2.classList.add("team2", "d-flex", "flex-column", "text-start");
 
     if (matchData.info.teams[1].win) {
-      txt += "win";
+      team2.append("win");
     } else {
-      txt += "lose";
+      team2.append("lose");
     }
-
     for (let x in matchData.info.participants) {
+      const players = document.createElement("span");
       if (matchData.info.participants[x].teamId == 200) {
-        txt += "<br />" + matchData.info.participants[x].championName;
-        txt += " " + matchData.info.participants[x].summonerName;
+        let img = matchData.info.participants[x].championName;
+        const playersImg = document.createElement("img");
+        playersImg.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
+          .split(" ")
+          .join("")}.png`;
+        playersImg.width = 20;
+        playersImg.height = 20;
+        const playersName = document.createElement("a");
+        playersName.innerHTML = matchData.info.participants[x].summonerName;
+        players.appendChild(playersImg);
+        players.appendChild(playersName);
       }
+      team2.appendChild(players);
     }
-    txt += "<br/><br/><br/>";
+    wrapper.appendChild(team2);
   }
-
-  document.getElementById("matchHistory").innerHTML = txt;
-  //get Get a match by match id
-  /*  let link2 =
-    "http://ddragon.leagueoflegends.com/cdn/12.13.1/data/en_US/champion.json";
-  const response2 = await fetch(link2);
-  const data2 = await response2.json();
- */
 }
 
-//https://americas.api.riotgames.com/lol/match/v5/matches/NA1_4381415328?api_key=RGAPI-8a8f861a-2101-42bf-b3f7-9e7a199e41ce
 matchHistory();
