@@ -1,205 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <!--===== LINKS =====-->
     <link rel="stylesheet" href="CSS/style.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!--=================-->
-</head>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Righteous&display=swap");
+      * {
+        font-family: "Montserrat", sans-serif;
+        font-size: small;
+      }
+      .navbar-brand {
+        font-family: "Righteous", cursive;
+        font-size: 2rem;
+      }
+      h1 {
+        font-family: "Righteous", cursive;
+        font-size: 3rem;
+      }
+      body {
+        background-color: #141433;
+      }
+      ol,
+      ul {
+        padding-left: 0;
+      }
+      #treeWrapper {
+        overflow: hidden;
+      }
+      #tree {
+        overflow-x: auto;
+      }
+      .tree ul {
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+        position: relative;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+      }
 
-<body onload="getItems()">
-    <nav class="navbar navbar-expand-lg sticky-top px-md-5 bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">RITO Companion</a>
-            <a class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars"></i>
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Items</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Champions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Leaderboards</a>
-                    </li>
-                </ul>
-            </div>
+      .tree li {
+        float: left;
+        text-align: center;
+        list-style-type: none;
+        position: relative;
+        padding: 20px 5px 0 5px;
+
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+      }
+
+      /*We will use ::before and ::after to draw the connectors*/
+
+      .tree li::before,
+      .tree li::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 50%;
+        border-top: 1px solid #f39331;
+        width: 50%;
+        height: 20px;
+      }
+      .tree li::after {
+        right: auto;
+        left: 50%;
+        border-left: 1px solid #f39331;
+      }
+
+      /*We need to remove left-right connectors from elements without 
+any siblings*/
+      .tree li:only-child::after,
+      .tree li:only-child::before {
+        display: none;
+      }
+
+      /*Remove space from the top of single children*/
+      .tree li:only-child {
+        padding-top: 0;
+      }
+
+      /*Remove left connector from first child and 
+right connector from last child*/
+      .tree li:first-child::before,
+      .tree li:last-child::after {
+        border: 0 none;
+      }
+      /*Adding back the vertical connector to the last nodes*/
+      .tree li:last-child::before {
+        border-right: 1px solid #f39331;
+        border-radius: 0 5px 0 0;
+        -webkit-border-radius: 0 5px 0 0;
+        -moz-border-radius: 0 5px 0 0;
+      }
+      .tree li:first-child::after {
+        border-radius: 5px 0 0 0;
+        -webkit-border-radius: 5px 0 0 0;
+        -moz-border-radius: 5px 0 0 0;
+      }
+
+      /*Time to add downward connectors from parents*/
+      .tree ul ul::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: 1px solid #f39331;
+        width: 0;
+        height: 20px;
+      }
+
+      .tree li a {
+        border: 1px solid #0f60af;
+        background-color: #0f60af;
+
+        text-decoration: none;
+        color: #fff;
+        font-family: arial, verdana, tahoma;
+        font-size: 11px;
+        display: inline-block;
+
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+      }
+
+      bg_orange {
+        border: 1px solid #f39331;
+        background-color: #f39331;
+      }
+
+      /*Time for some hover effects*/
+      /*We will apply the hover effect the the lineage of the element also*/
+      .tree li a:hover,
+      .tree li a:hover + ul li a {
+        background: #f39331;
+        color: #fff;
+        border: 1px solid #f39331;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg sticky-top bg-dark px-md-5">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Legend.GG</a>
+        <a
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Items</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Champions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Leaderboards</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
-    <!-- Example Tooltip-->
-
-    <!-- Example Tooltip-->
-
     <!-- The header content -->
-    <div class="container-fluid h-100">
-        <div class="row">
-            <div class="container-1">
-                <div class="grid-item grid-header">
-                    <div class="card mb-12" style="max-width: 100%;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="./media/img/hero1.png" class="img-fluid rounded-start" alt="..." height="50px"
-                                    width="50px">
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Item Name:</h5>
-                                    <p class="card-text">Black Cleaver</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-item grid-sideleft">
-                    <div class="container">
-                        <div class="row">
-                            <div class="borderinline">
-                                <h3 class="item-head">Gold:</h3>
-                                <p class="item-dis">
-                                    "base": 850,
-                                    "purchasable": true,
-                                    "total": 3100,
-                                    "sell": 2170</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="borderinline">
-                                <h3 class="item-head">plaintext</h3>
-                                <p class="item-dis">"Dealing physical damage to enemy champions reduces their Armor"</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-item grid-main"> 
-                    <h3 class="item-head">Bulid From:</h3> 
-                    <div class="tree">
-                        <ul>
-                            <li>
-                                <img src="./media/img/hero1.png" class="img-fluid rounded-start" alt="..." height="50px"
-                                    width="50px" data-bs-toggle="tooltip" data-bs-title="Item 1">
-                                <ul>
-                                    <li>
-                                        <img src="./media/img/hero1.png" class="img-fluid rounded-start" alt="..."
-                                            height="50px" width="50px" data-bs-toggle="tooltip" data-bs-title="Item 2">
-                                        <ul>
-                                            <li><img src="./media/img/hero1.png" class="img-fluid rounded-start"
-                                                    alt="..." height="50px" width="50px" data-bs-toggle="tooltip"
-                                                    data-bs-title="Item 3"></li>
-                                            <li><img src="./media/img/hero1.png" class="img-fluid rounded-start"
-                                                    alt="..." height="50px" width="50px" data-bs-toggle="tooltip"
-                                                    data-bs-title="Item 4"></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <img src="./media/img/hero1.png" class="img-fluid rounded-start" alt="..."
-                                            height="50px" width="50px" data-bs-toggle="tooltip" data-bs-title="Item 5">
-                                        <ul>
-                                            <li><img src="./media/img/hero1.png" class="img-fluid rounded-start"
-                                                    alt="..." height="50px" width="50px" data-bs-toggle="tooltip"
-                                                    data-bs-title="Item 6"></li>
-                                            <li><img src="./media/img/hero1.png" class="img-fluid rounded-start"
-                                                    alt="..." height="50px" width="50px" data-bs-toggle="tooltip"
-                                                    data-bs-title="Item 7"></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="grid-item grid-sideright">
-                    <div class="container">
-                        <div class="row">
-                            <div class="borderinline">
-                                <h5 class="card-title">Item Description:</h5>
-                                    <p class="card-text">
-                                        "<mainText>
-                                            <stats>
-                                                <attention>45</attention> Attack Damage<br>
-                                                <attention>350</attention> Health<br>
-                                                <attention>30</attention> Ability Haste
-                                            </stats><br>
-                                            <li>
-                                                <passive>Carve:</passive> Dealing physical damage to a champion applies
-                                                a stack of <scaleArmor>5% Armor reduction</scaleArmor> for 6 seconds
-                                                (max <scaleArmor>30% Armor reduction</scaleArmor>).
-                                            <li>
-                                                <passive>Rage:</passive> Dealing physical damage to a champion grants 3
-                                                Move Speed per stack of <unique>Carve</unique> on them for 2 seconds.
-                                        </mainText><br>",
-                                    </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 d-flex flex-row text-white py-5" id="itemHead">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12 col-lg-4">
+          <div class="row">
+            <div
+              class="col-12 bg-dark text-white p-3 rounded mb-3"
+              id="sidebarLeft"
+            >
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <div
+              class="col-12 bg-dark text-white p-3 rounded"
+              id="sidebarRight"
+            >
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-8 px-3" id="treeWrapper">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div
+            class="tree d-flex flex-column text-center bg-dark rounded text-white py-3"
+            id="tree"
+          ></div>
+        </div>
+      </div>
     </div>
+
     <!-- Adding Footer-->
     <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-6">
-                    <h6>LegendGG</h6>
-                    <p class="text-justify"> isn't endorsed by Riot Games and doesn't reflect the
-                        views or opinions of Riot Games or anyone officially involved in
-                        producing or managing Riot Games properties. Riot Games, and all
-                        associated properties are trademarks or registered trademarks of
-                        Riot Games, Inc.</p>
-                </div>
-                <div class="col-xs-6 col-md-3">
-                    <h6>Quick Links</h6>
-                    <ul class="footer-links">
-                        <li><a href="#">Champion</a></li>
-                        <li><a href="#">Item</a></li>
-                        <li><a href="#">Summoner</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h6>LegendGG</h6>
+            <p class="text-justify">
+              isn't endorsed by Riot Games and doesn't reflect the views or
+              opinions of Riot Games or anyone officially involved in producing
+              or managing Riot Games properties. Riot Games, and all associated
+              properties are trademarks or registered trademarks of Riot Games,
+              Inc.
+            </p>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <h6>Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="#">Champion</a></li>
+              <li><a href="#">Item</a></li>
+              <li><a href="#">Summoner</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-sm-6 col-xs-12">
-                    <p class="copyright-text">Copyright &copy; 2022 All Rights Reserved by
-                        <a href="#">LegendGG</a>.
-                    </p>
-                </div>
+        <hr />
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">
+              Copyright &copy; 2022 All Rights Reserved by
+              <a href="#">LegendGG</a>.
+            </p>
+          </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <ul class="social-icons">
-                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a class="github" href="#"><i class="fa fa-github"></i></a></li>
-                        <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-                    </ul>
-                </div>
-            </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+              <li>
+                <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+              </li>
+              <li>
+                <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li>
+                <a class="github" href="#"><i class="fa fa-github"></i></a>
+              </li>
+              <li>
+                <a class="instagram" href="#"
+                  ><i class="fa fa-instagram"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </footer>
     <!-- Adding Footer-->
     <!--===== SCRIPT =====-->
     <script src="js/config.js"></script>
-    <script src="js/API.js"></script>
-    <script src="https://kit.fontawesome.com/b4299c0961.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
-        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
-        crossorigin="anonymous"></script>
-    <!--==================-->
-</body>
+    <script src="js/itemsInsite.js"></script>
 
+    <script
+      src="https://kit.fontawesome.com/b4299c0961.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+      integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+      crossorigin="anonymous"
+    ></script>
+    <!--==================-->
+  </body>
 </html>

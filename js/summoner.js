@@ -173,7 +173,6 @@ async function matchHistory() {
 
     //player icon
     const playerIcon = document.createElement("img");
-
     playerIcon.width = 100;
     playerIcon.height = 100;
 
@@ -200,14 +199,14 @@ async function matchHistory() {
     for (let x in matchData.info.participants) {
       //get match details of player
       let player = matchData.info.participants[x];
-      let img = matchData.info.participants[x].championName;
-      playerIcon.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
-        .split(" ")
-        .join("")}.png`;
 
       if (
         player.summonerName == document.getElementById("summName").innerText
       ) {
+        let img = matchData.info.participants[x].championName;
+        playerIcon.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
+          .split(" ")
+          .join("")}.png`;
         let team = player.teamId;
         //victory or defeat
         for (const x of matchData.info.teams) {
