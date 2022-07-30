@@ -7,34 +7,72 @@ async function getItems() {
   const response = await fetch(link);
   let data = await response.json();
 
-  //create item cards
-  let txt = "<div class='d-flex flex-wrap justify-content-start mx-auto'>";
-  for (let x in data.data) {
-    let imgSrc = `https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/${data.data[x].image.full}`;
-    txt += `<div class="card m-2" style="width: 10rem;">`;
-    txt += ` <img src="${imgSrc}" class="card-img-top" alt="...">`;
-    txt += `<div class="card-body">`;
-    txt += `<h5 class="card-title"><a href ="insiteitem.html?${x}">${data.data[x].name}</a></h5>`;
+  let txt = "";
+  const activeFilter = document.getElementById("activeFilter");
+  const filters = activeFilter.querySelectorAll(".filter");
 
-    //txt += `<p class="card-text">${data.data[x].description}</p>`;
-    txt += `<p class="card-text">${data.data[x].plaintext}</p>`;
-
-    //some items are not upgradeable
-    //show items if upgradeable is true
-    if (data.data[x].hasOwnProperty("into") == true) {
-      txt += `<p class="mb-0 ">upgrades:</p>`;
-      for (let i in data.data[x].into) {
-        let buildInto = data.data[x].into[i];
-        let buildIntoImg = data.data[buildInto].image.full;
-        let buildIntoImgsrc = `https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/${buildIntoImg}`;
-        txt += `<img src="${buildIntoImgsrc}" class="card-img-top" alt="..." style="height: 20px; width: 20px"> `;
+  function doesExist(obj, value) {
+    for (let key in obj) {
+      if (obj[key].innerText == value) {
+        return true;
       }
     }
-    txt += `</div></div>`;
+    return false;
   }
-  txt += `</div>`;
+
+  //add filter
+  console.log(filters);
+  for (let x in data.data) {
+    let imgSrc = `https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/${data.data[x].image.full}`;
+    if (data.data[x].gold.purchasable) {
+      if (filters.length == 0) {
+        txt += `<div class="m-2" style="width: 5rem;">`;
+        txt += `
+        <a href="insiteitem.html?${x}">
+        <img src="${imgSrc}" 
+        class="border border-warning rounded img-fluid" 
+        alt="..."
+        data-bs-toggle = "tooltip"
+        data-bs-title = "${data.data[x].name}"
+        data-bs-placement = "top"
+        ></a>`;
+
+        txt += `</div>`;
+      } else {
+        let exists = false;
+        if (data.data[x].hasOwnProperty("tags")) {
+          for (i of data.data[x].tags) {
+            exists = doesExist(filters, i.toUpperCase());
+          }
+        }
+        if (exists) {
+          txt += `<div class="m-2" style="width: 5rem;">`;
+          txt += `
+        <a href="insiteitem.html?${x}">
+        <img src="${imgSrc}" 
+        class="border border-warning rounded img-fluid" 
+        alt="..."
+        data-bs-toggle = "tooltip"
+        data-bs-title = "${data.data[x].name}"
+        data-bs-placement = "top"
+        ></a>`;
+          console.log(data.data[x].tags);
+          txt += `</div>`;
+        }
+      }
+    }
+  }
+
   //put items cards into div
-  document.getElementById("items").innerHTML += txt;
+  document.getElementById("items").innerHTML = txt;
+
+  //initialize tooltips
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  const tooltipList = [...tooltipTriggerList].map(
+    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+  );
 }
 
 //search items
@@ -42,17 +80,67 @@ function searchItems() {
   const inputSearch = document.querySelector('input[name="inputSearch"]');
   const query = inputSearch.value.toUpperCase();
   const list = document.getElementById("items");
-  const cardh5 = list.querySelectorAll(".card-title");
-  const card = list.querySelectorAll("div.card");
+  // const cardh5 = list.querySelectorAll(".card-title");
+  // const card = list.querySelectorAll("div.card");
+  const items = list.querySelectorAll("[data-bs-title]");
 
   //search all cards for matches with search query
   //if match then show, else hide
-  for (i = 0; i < cardh5.length; i++) {
-    cardTitle = cardh5[i].innerText;
-    if (cardTitle.toUpperCase().indexOf(query) > -1) {
-      card[i].style.display = "";
+  for (i = 0; i < items.length; i++) {
+    itemName = items[i].getAttribute("data-bs-title");
+    if (itemName.toUpperCase().indexOf(query) > -1) {
+      items[i].parentNode.parentNode.style.display = "";
     } else {
-      card[i].style.display = "none";
+      items[i].parentNode.parentNode.style.display = "none";
+    }
+  }
+}
+
+function addFilter(filter) {
+  const activeFilter = document.getElementById("activeFilter");
+  const filters = activeFilter.querySelectorAll(".filter");
+  //check if nodelist has value
+  const doesExist = (obj, value) => {
+    for (let key in obj) {
+      if (obj[key].innerText == value) {
+        return true;
+      }
+    }
+    return false;
+  };
+  let exists = doesExist(filters, filter);
+
+  if (!exists) {
+    const newFilter = document.createElement("div");
+    newFilter.classList.add(
+      "filter",
+      "bg-light",
+      "rounded-pill",
+      "text-dark",
+      "px-3",
+      "py-2",
+      "me-2"
+    );
+    newFilter.innerText = filter;
+    const closeBtn = document.createElement("i");
+    closeBtn.classList.add("closeBtn", "ms-2", "fa-solid", "fa-xmark");
+    closeBtn.setAttribute("onclick", `removeFilter('${filter}')`);
+    newFilter.appendChild(closeBtn);
+    activeFilter.appendChild(newFilter);
+  } else {
+    console.log("no, filter added na ");
+  }
+
+  //hide mga di pasok sa filter
+  getItems();
+}
+function removeFilter(filter) {
+  const activeFilter = document.getElementById("activeFilter");
+  const filters = activeFilter.querySelectorAll(".filter");
+  for (x of filters) {
+    if (x.innerText == filter) {
+      x.remove();
+      getItems();
     }
   }
 }

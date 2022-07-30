@@ -6,18 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <!--===== LINKS =====-->
-    <link rel="stylesheet" href="CSS/style.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
     />
+    <link rel="stylesheet" href="CSS/style.css" />
     <!--=================-->
+    <style>
+      #filterTree li ul li:hover {
+        background-color: aqua;
+        cursor: pointer;
+      }
+      .closeBtn {
+        cursor: pointer;
+      }
+    </style>
   </head>
 
   <body onload="getItems()">
-    <nav class="navbar navbar-expand-lg sticky-top px-md-5 bg-dark">
+    <nav class="navbar navbar-expand-lg sticky-top bg-dark px-md-5">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">RITO Companion</a>
+        <a class="navbar-brand" href="index.html">Legend.GG</a>
         <a
           class="navbar-toggler"
           type="button"
@@ -32,176 +41,150 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="#">Items</a>
+              <a class="nav-link active" href="items.html">Items</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Champions</a>
+              <a class="nav-link" href="champions.html">Champions</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Leaderboards</a>
+              <a class="nav-link" href="leaderboards.html">Leaderboards</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- Example Tooltip-->
-
     <!-- The header content -->
     <div class="container text-center">
-      <div class="text-item">
-        <h4>League of Legends Items</h4>
+      <div class="text-item text-white pt-5 pb-2">
+        <h1>League of Legends Items</h1>
         <p>
           All in-game items for League of Legends, including mythics, legendary,
           starting items, and consumables. Up-to-date stats, passives, actives,
           and gold costs
         </p>
-      </div>
-      <div class="col align-self-center">
-        <input
-          type="text"
-          id="inputSearch"
-          name="inputSearch"
-          class="form-control my-3"
-          placeholder="Search Item"
-          onkeyup="searchItems()"
-        />
-        <h1>Item</h1>
-        <div id="items">
-          <!--           <div class="item-list">
-            <div class="item-name">
-              <h4>Starter Items</h4>
-            </div>
-            <div class="item-container">
-              <a href="insiteitem.html"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Consumable Items</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
+        <div class="d-flex flex-column">
+          <div class="d-flex justify-content-center align-self-start h-100">
+            <button
+              class="btn btn-primary me-3"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#filter"
+              aria-expanded="false"
+              aria-controls="offcanvas"
+            >
+              Filter <i class="fa-solid fa-arrow-down-wide-short"></i>
+            </button>
+
+            <div class="userInputWrapper bg-light p-2 rounded">
+              <input
+                type="text"
+                id="inputSearch"
+                name="inputSearch"
+                placeholder="Search Item"
+                onkeyup="searchItems()"
+                autocomplete="off"
+                style="border: 0; outline: 0"
+              />
+              <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
             </div>
           </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Trinkets</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Distributed Items</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Boots</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Basic Items</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Epic Items</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Legendary Items</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Mythic Items</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="item-list">
-            <div class="item-name">
-              <h4>Ornn Items</h4>
-            </div>
-            <div class="item-container">
-              <a href="/lol/items/crown-of-the-shattered-queen"
-                ><img
-                  src="https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/1004.png"
-                  alt="Faerie Charm"
-                />
-              </a>
-            </div>
-          </div> -->
+          <div
+            class="d-flex flex-row flex-wrap justify-content-start py-3"
+            id="activeFilter"
+          ></div>
         </div>
       </div>
+      <div
+        id="items"
+        class="d-flex flex-wrap justify-content-center text-white pb-5"
+      ></div>
     </div>
-
+    <!-- off canvas fo filter -->
+    <div
+      class="offcanvas offcanvas-start bg-dark text-white"
+      tabindex="-1"
+      id="filter"
+      aria-labelledby="filterTitle"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="filterTitle">Filter</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body text-start">
+        <ul id="filterTree">
+          <li>
+            START
+            <ul>
+              <li onclick="addFilter(this.innerText)">LANE</li>
+              <li onclick="addFilter(this.innerText)">JUNGLE</li>
+            </ul>
+          </li>
+          <li>
+            TOOLS
+            <ul>
+              <li onclick="addFilter(this.innerText)">GOLDPER</li>
+              <li onclick="addFilter(this.innerText)">CONSUMABLE</li>
+              <li onclick="addFilter(this.innerText)">VISION</li>
+            </ul>
+          </li>
+          <li>
+            DEFENSE
+            <ul>
+              <li onclick="addFilter(this.innerText)">HEALTH</li>
+              <li onclick="addFilter(this.innerText)">HEALTHREGEN</li>
+              <li onclick="addFilter(this.innerText)">ARMOR</li>
+              <li onclick="addFilter(this.innerText)">SPELLBLOCK</li>
+            </ul>
+          </li>
+          <li>
+            ATTACK
+            <ul>
+              <li onclick="addFilter(this.innerText)">LIFESTEAL</li>
+              <li onclick="addFilter(this.innerText)">CRITICALSTRIKE</li>
+              <li onclick="addFilter(this.innerText)">ATTACKSPEED</li>
+              <li onclick="addFilter(this.innerText)">DAMAGE</li>
+            </ul>
+          </li>
+          <li>
+            MAGIC
+            <ul>
+              <li onclick="addFilter(this.innerText)">MANA</li>
+              <li onclick="addFilter(this.innerText)">SPELLDAMAGE</li>
+              <li onclick="addFilter(this.innerText)">COOLDOWNREDUCTION</li>
+              <li onclick="addFilter(this.innerText)">MANAREGEN</li>
+            </ul>
+          </li>
+          <li>
+            MOVEMENT
+            <ul>
+              <li onclick="addFilter(this.innerText)">BOOTS</li>
+              <li onclick="addFilter(this.innerText)">NONBOOTSMOVEMENT</li>
+            </ul>
+          </li>
+          <li>
+            UNCATEGORIZED
+            <ul>
+              <li onclick="addFilter(this.innerText)">ACTIVE</li>
+              <li onclick="addFilter(this.innerText)">MAGICPENETRATION</li>
+              <li onclick="addFilter(this.innerText)">ARMORPENETRATION</li>
+              <li onclick="addFilter(this.innerText)">AURA</li>
+              <li onclick="addFilter(this.innerText)">ONHIT</li>
+              <li onclick="addFilter(this.innerText)">TRINKET</li>
+              <li onclick="addFilter(this.innerText)">SLOW</li>
+              <li onclick="addFilter(this.innerText)">STEALTH</li>
+              <li onclick="addFilter(this.innerText)">SPELLVAMP</li>
+              <li onclick="addFilter(this.innerText)">TENACITY</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
     <!-- Adding Footer-->
     <footer class="site-footer">
       <div class="container">
@@ -266,11 +249,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.js"
-      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-      crossorigin="anonymous"
-    ></script>
     <!--==================-->
   </body>
 </html>
