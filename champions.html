@@ -20,14 +20,14 @@
     <!--=================-->
 
     <style>
-      *{
+      * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-      body{
+      body {
         background-color: #141433;
-        color:white
+        color: white;
       }
       .userInputWrapper {
         background-color: white;
@@ -47,7 +47,7 @@
         text-decoration: none;
       }
       .img-div {
-        transition: .5s;
+        transition: 0.5s;
         margin: 10px;
       }
       .img-div:hover {
@@ -55,7 +55,7 @@
         top: 5px;
         transition: 4s ease;
       }
-      .form-select{
+      .form-select {
         width: 8rem;
       }
     </style>
@@ -95,73 +95,111 @@
       </div>
     </nav>
     <!-- The header content -->
-    <div class="container-lg pb-3 border border-dark border-bottom-0 border-top-0 h-100">
+    <div
+      class="container-lg pb-3 border border-dark border-bottom-0 border-top-0 h-100"
+    >
       <div class="row">
         <div class="d-flex col-lg-4 justify-content-end py-5">
-          <select
-                type="button"
-                class="form-select"
-                id="server"
-              >
-                <option value="br1">FIGHTER</option>
-                <option value="eun1">ASASSIN</option>
-                <option value="euw1">MAGE</option>
-                <option value="kr">SUPPORT</option>
-                <option value="la1">MARKSMAN</option>
-                <option value="la2">TANK</option>
-              </select>
+          <select type="button" class="form-select" id="server">
+            <option value="br1">FIGHTER</option>
+            <option value="eun1">ASASSIN</option>
+            <option value="euw1">MAGE</option>
+            <option value="kr">SUPPORT</option>
+            <option value="la1">MARKSMAN</option>
+            <option value="la2">TANK</option>
+          </select>
         </div>
-        <div class="col-lg-6 py-5 text-center ">
+        <div class="col-lg-6 py-5 text-center">
           <input
-          type="text"
-          onkeyup="searchChampions()"
-          id="inputSearch"
-          name="inputSearch"
-          class="form-control userInputWrapper"
-          placeholder="Search A Champion"
-        />
+            type="text"
+            onkeyup="searchChampions()"
+            id="inputSearch"
+            name="inputSearch"
+            class="form-control userInputWrapper"
+            placeholder="Search A Champion"
+          />
         </div>
       </div>
       <div class="row justify-content-evenly g-4">
         <div class="d-flex flex-wrap col-md-10 justify-content-center my-3">
-          <div class="img-div text-center mx-3 ">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+          <div class="img-div text-center mx-3">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
           <div class="img-div text-center mx-3">
-            <img src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png" class="img-thumbnail" alt="...">
+            <img
+              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
+              class="img-thumbnail"
+              alt="..."
+            />
             <h6>AATROX</h6>
           </div>
         </div>
@@ -172,11 +210,13 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <h6>LegendGG</h6>
-            <p class="text-justify"> isn't endorsed by Riot Games and doesn't reflect the
-              views or opinions of Riot Games or anyone officially involved in
-              producing or managing Riot Games properties. Riot Games, and all
-              associated properties are trademarks or registered trademarks of
-              Riot Games, Inc.</p>
+            <p class="text-justify">
+              isn't endorsed by Riot Games and doesn't reflect the views or
+              opinions of Riot Games or anyone officially involved in producing
+              or managing Riot Games properties. Riot Games, and all associated
+              properties are trademarks or registered trademarks of Riot Games,
+              Inc.
+            </p>
           </div>
           <div class="col-xs-6 col-md-3">
             <h6>Quick Links</h6>
@@ -187,22 +227,33 @@
             </ul>
           </div>
         </div>
-        <hr>
+        <hr />
       </div>
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-sm-6 col-xs-12">
-            <p class="copyright-text">Copyright &copy; 2022 All Rights Reserved by
+            <p class="copyright-text">
+              Copyright &copy; 2022 All Rights Reserved by
               <a href="#">LegendGG</a>.
             </p>
           </div>
-  
+
           <div class="col-md-4 col-sm-6 col-xs-12">
             <ul class="social-icons">
-              <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-              <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-              <li><a class="github" href="#"><i class="fa fa-github"></i></a></li>
-              <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+              <li>
+                <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+              </li>
+              <li>
+                <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li>
+                <a class="github" href="#"><i class="fa fa-github"></i></a>
+              </li>
+              <li>
+                <a class="instagram" href="#"
+                  ><i class="fa fa-instagram"></i
+                ></a>
+              </li>
             </ul>
           </div>
         </div>
