@@ -1,0 +1,148 @@
+h1 {
+  font-weight: 600;
+  font-size: 3rem;
+  color: #fff;
+}
+h2 {
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: #fff;
+}
+.contentwrapper {
+  min-height: 100vh;
+  background-color: #141433;
+  position: relative;
+}
+.userInputWrapper {
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px;
+}
+.searchResult {
+  display: none;
+}
+.userInput {
+  border: 0;
+  outline: 0;
+  background: none;
+}
+
+.search_icon {
+  color: black;
+  text-decoration: none;
+}
+.userInput option {
+  background-color: red;
+}
+
+.pagination-outer {
+  text-align: center;
+}
+.pagination {
+  font-family: "Ubuntu", sans-serif;
+  display: inline-flex;
+  position: relative;
+}
+.pagination li a.page-link {
+  color: #fff;
+  background: #4b6584;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 34px;
+  height: 36px;
+  width: 36px;
+  padding: 0;
+  margin: 0 7px;
+  border: none;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease 0s;
+}
+.pagination li a.page-link:hover,
+.pagination li a.page-link:focus,
+.pagination li.active a.page-link:hover,
+.pagination li.active a.page-link {
+  color: #fff;
+  background: transparent;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.pagination li a.page-link:before,
+.pagination li a.page-link:after {
+  content: "";
+  background: linear-gradient(#4b6584 50%, #eb3b5a 50%);
+  height: 200%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  transition: all 0.4s ease 0s;
+}
+.pagination li a.page-link:after {
+  opacity: 0;
+  transform: scale(0.1);
+  top: -50%;
+  transition: all 0.4s ease 0.2s;
+}
+.pagination li a.page-link:hover:before,
+.pagination li a.page-link:focus:before,
+.pagination li.active a.page-link:hover:before,
+.pagination li.active a.page-link:before {
+  opacity: 0;
+  transform: scale(0.1);
+  top: -50%;
+}
+.pagination li a.page-link:hover:after,
+.pagination li a.page-link:focus:after,
+.pagination li.active a.page-link:hover:after,
+.pagination li.active a.page-link:after {
+  opacity: 1;
+  transform: scale(1);
+  top: -100%;
+}
+@media only screen and (max-width: 480px) {
+  .pagination {
+    font-size: 0;
+    display: inline-block;
+  }
+  .pagination li {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 0 15px;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .summonerName img {
+    display: none;
+  }
+  .progress {
+    display: none;
+  }
+  .winsLoss {
+    display: none;
+  }
+}
+.summonerName a {
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: 10px;
+}
+.summonerName a:hover {
+  color: #eb3b5a;
+}
+.rank {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.progress {
+  height: 8px;
+}
+.progress-bar {
+  background-color: #4b6584;
+}
+.winrateTH {
+  max-width: 175px;
+}
