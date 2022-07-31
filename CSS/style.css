@@ -30,6 +30,24 @@ h1 {
 ul {
   list-style-type: none;
 }
+#ItemFilterTree li ul li:hover {
+  background-color: aqua;
+  cursor: pointer;
+}
+#ChampFilterTree li {
+  padding: 10px 0 0 10px;
+  border-left: aqua 5px solid;
+  margin-bottom: 10px;
+}
+#ChampFilterTree li:hover {
+  background-color: aqua;
+  cursor: pointer;
+  color: #141433;
+}
+.closeBtn {
+  cursor: pointer;
+}
+
 /* navbar */
 .navbar-brand {
   font-family: "Righteous", cursive;

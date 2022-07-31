@@ -21,7 +21,7 @@ async function getItems() {
   }
 
   //add filter
-  console.log(filters);
+
   for (let x in data.data) {
     let imgSrc = `https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/${data.data[x].image.full}`;
     if (data.data[x].gold.purchasable) {
@@ -39,13 +39,23 @@ async function getItems() {
 
         txt += `</div>`;
       } else {
-        let exists = false;
+        /*         let exists = false;
         if (data.data[x].hasOwnProperty("tags")) {
           for (i of data.data[x].tags) {
             exists = doesExist(filters, i.toUpperCase());
           }
+        } */
+        const filterArr = [];
+        for (i = 0; i < filters.length; i++) {
+          filterArr.push(filters[i].innerText.toUpperCase());
         }
-        if (exists) {
+        const tagArr = [];
+        for (i = 0; i < data.data[x].tags.length; i++) {
+          tagArr.push(data.data[x].tags[i].toUpperCase());
+        }
+        const found = filterArr.every((r) => tagArr.includes(r));
+
+        if (found) {
           txt += `<div class="m-2" style="width: 5rem;">`;
           txt += `
         <a href="insiteitem.html?${x}">
