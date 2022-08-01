@@ -11,14 +11,14 @@ async function getItems() {
   const activeFilter = document.getElementById("activeFilter");
   const filters = activeFilter.querySelectorAll(".filter");
 
-  function doesExist(obj, value) {
+  /*  function doesExist(obj, value) {
     for (let key in obj) {
       if (obj[key].innerText == value) {
         return true;
       }
     }
     return false;
-  }
+  } */
 
   //add filter
 
