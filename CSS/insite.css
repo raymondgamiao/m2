@@ -130,11 +130,15 @@ img.img1 {
   background-color: rgba(21, 20, 51, 0.8);
   z-index: -1;
 }
-.carousel-caption{
-  position: absolute;
+.carousel-title{
+
+  color: #fff;
+
+  z-index: 2;
+}
+.carousel-description{
   color: #fff;
   text-align: center;
-  z-index: 2;
 }
 
 section {
