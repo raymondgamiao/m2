@@ -104,7 +104,8 @@ img.img1 {
 .cover {
   background-image: url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg);
   background-size: cover;
-  justify-content: center;
+  background-repeat: no-repeat;
+ background-position: center;
   width: 60%;
   height: 70vh;
   -webkit-mask-image: linear-gradient(rgb(0, 0, 0) 65%, rgba(0, 0, 0, 0) 98%);
