@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <!--===== LINKS =====-->
-    <link rel="stylesheet" href="CSS/style.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -17,6 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@1,300;1,400&family=Lobster&family=Newsreader:opsz,wght@6..72,200;6..72,400&family=Noto+Serif&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="CSS/style.css" />
     <!--=================-->
 
     <style>
@@ -101,10 +101,10 @@
   <!-- onload="getChampions()" -->
   <!-- lagay mo tong function pag ready na -->
   <!-- gawa ka ng design ng cards tas kahit 3 examples tas yun gagayahin ko -->
-  <body>
+  <body onload="getChampions()">
     <nav class="navbar navbar-expand-lg sticky-top px-md-5 bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">LEGEND.GG</a>
+        <a class="navbar-brand" href="#">RITO Companion</a>
         <a
           class="navbar-toggler"
           type="button"
@@ -119,273 +119,70 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="#">Items</a>
+              <a class="nav-link" href="items.html">Items</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Champions</a>
+              <a class="nav-link active" href="champions.html">Champions</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Leaderboards</a>
+              <a class="nav-link" href="leaderboards.html">Leaderboards</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
     <!-- The header content -->
-    <div
-      class="container-lg pb-3 border border-dark border-bottom-0 border-top-0 h-100"
-    >
-      <div id="progress">
-        <button id="progress-value">
-          <i class="fa-solid fa-arrow-up fa-xs"></i>
-        </button>
-      </div>
+    <div class="container-fluid h-100">
       <div class="row">
-        <div class="d-flex col-lg-4 justify-content-end py-5">
-          <select type="button" class="form-select" id="server">
-            <option value="br1">FIGHTER</option>
-            <option value="eun1">ASASSIN</option>
-            <option value="euw1">MAGE</option>
-            <option value="kr">SUPPORT</option>
-            <option value="la1">MARKSMAN</option>
-            <option value="la2">TANK</option>
-          </select>
-        </div>
-        <div class="col-lg-6 py-5 text-center">
+        <div class="col-2 border">
+          <nav class="navbar bg-light">
+            <div class="container">
+              <a class="navbar-brand" href="#">
+                <img
+                  src="/docs/5.2/assets/brand/bootstrap-logo.svg"
+                  alt=""
+                  width="30"
+                  height="24"
+                />
+              </a>
+            </div>
+          </nav>
           <input
             type="text"
             onkeyup="searchChampions()"
             id="inputSearch"
             name="inputSearch"
-            class="form-control userInputWrapper"
-            placeholder="Search A Champion"
+            class="form-control my-3"
+            placeholder="Search Champion"
           />
+          <p>
+            di ko alam ano ilalagay dito sa sidenav so si search nalang muna
+          </p>
+          <p>need pala ilagay to somewhere:</p>
+          <p>
+            [Your product] isn't endorsed by Riot Games and doesn't reflect the
+            views or opinions of Riot Games or anyone officially involved in
+            producing or managing Riot Games properties. Riot Games, and all
+            associated properties are trademarks or registered trademarks of
+            Riot Games, Inc.
+          </p>
         </div>
-      </div>
-      <div class="row justify-content-evenly g-4">
-        <div class="d-flex flex-wrap col-md-10 justify-content-center my-3">
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
+        <div class="col-8 text-center">
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-6">
+              <input
+                type="text"
+                onkeyup="searchChampions()"
+                id="inputSearch"
+                name="inputSearch"
+                class="form1 form-control my-3"
+                placeholder="Search Champion"
+              />
+            </div>
           </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
-          <div class="img-div text-center mx-3">
-            <img
-              src="http://ddragon.leagueoflegends.com/cdn/12.14.1/img/champion/Aatrox.png"
-              class="img-thumbnail"
-              alt="..."
-            />
-            <h6>AATROX</h6>
-          </div>
+          <div id="champions"></div>
         </div>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt
-          rerum atque assumenda delectus, culpa omnis accusamus veniam minima
-          aliquam voluptatem neque reprehenderit aspernatur quia earum animi,
-          nostrum hic cumque enim? Eos corrupti, nulla expedita autem quidem
-          laudantium aperiam? Tenetur reprehenderit repudiandae omnis dolorum in
-          aspernatur architecto! Ab, nobis maxime officiis sunt quae nulla
-          molestias architecto aliquam quia doloremque laboriosam laudantium
-          similique omnis sint eligendi consequatur repellat tempora voluptatem
-          voluptate molestiae quis. Consectetur odio ducimus nesciunt
-          dignissimos. Alias facilis quis mollitia, dolorem iusto dolor quidem
-          rem, quam asperiores reprehenderit autem vero minus quod. Sint ea
-          accusamus distinctio quae repellat veniam quos maiores impedit
-          consectetur at similique ratione corporis nesciunt tempora unde
-          eveniet libero quidem laborum recusandae beatae, quasi eius!
-          Accusantium impedit, a quae quas qui, fuga velit incidunt architecto
-          nostrum laborum libero veritatis. Eveniet nam incidunt quos labore
-          quibusdam ad ipsa, pariatur alias. Eius nihil repellendus magni at?
-          Corrupti harum fugiat in exercitationem dolore impedit eligendi eum
-          quam accusantium illum totam ratione quis sequi doloremque, autem
-          accusamus. Aspernatur cumque ipsam beatae porro nihil voluptates,
-          consectetur non architecto dicta eligendi quia aliquid soluta natus
-          provident exercitationem officiis repellendus dolores possimus odit
-          sapiente omnis et ducimus maiores explicabo! Placeat vel aut voluptas
-          debitis, soluta veniam quibusdam sint enim voluptate iure atque magni
-          itaque perspiciatis facere rem? Tenetur, eaque repellat ad laboriosam
-          iste perspiciatis pariatur commodi magnam animi suscipit ratione.
-          Laudantium delectus, odio sunt voluptatibus eos obcaecati esse cum
-          exercitationem. Praesentium necessitatibus temporibus voluptate nisi
-          sunt inventore alias at quo, facere vel eligendi autem accusamus
-          fugiat reiciendis et obcaecati est facilis, id deserunt ab placeat.
-          Eligendi similique aperiam cumque quis aliquid alias quisquam at
-          omnis. Mollitia, asperiores nisi esse autem rerum quasi quae numquam
-          neque soluta deserunt repellat harum laboriosam accusantium. Modi
-          dolorum libero unde perspiciatis quo facilis amet aperiam quas
-          architecto, aut, nobis, ipsa ad vitae accusantium non voluptas
-          pariatur doloribus. Dolores, commodi repudiandae consectetur quas
-          quaerat amet voluptas libero autem veritatis numquam illo rem omnis
-          distinctio iste similique nemo eaque, aut accusamus ratione
-          aspernatur? Soluta reprehenderit, vero similique qui blanditiis magni
-          dolores laboriosam nihil est voluptatem totam illo numquam suscipit
-          consectetur enim? Quibusdam quisquam veniam aliquam hic impedit sint
-          temporibus rerum, quis labore recusandae cumque a, sunt molestias
-          ipsum esse est? Asperiores corrupti ipsa quibusdam nam quae. Ducimus
-          iure possimus cupiditate labore voluptates dolores ullam, molestias
-          porro quos commodi architecto iste, soluta dolore repudiandae sed
-          maiores illum, eligendi consectetur praesentium officiis repellat
-          impedit? Laudantium a soluta pariatur ipsam omnis! Rerum quos nihil
-          iusto alias maiores voluptates et praesentium voluptatum quidem
-          sapiente sit exercitationem ut, nam laborum reiciendis laboriosam
-          repudiandae natus blanditiis a, beatae incidunt voluptas fuga aliquam?
-          Praesentium soluta perspiciatis non beatae alias quisquam! Illum
-          optio, culpa, voluptates debitis cum sint nesciunt sit, ex consectetur
-          quis mollitia. Deserunt eligendi vitae consequuntur maiores id
-          repellendus debitis fugit optio inventore officia quod exercitationem
-          incidunt molestias, tempore obcaecati sit autem nam alias aspernatur
-          amet quidem sunt cum harum! Consequatur officia voluptatem aliquid
-          fuga in laudantium totam repellat facere accusantium molestias fugiat
-          debitis dolorem, quam, quia veritatis? Nostrum, id sint facere optio
-          minus, maiores corrupti nemo ipsa impedit cum non blanditiis explicabo
-          harum animi totam praesentium fugit est excepturi tempore, vero unde!
-          Consequuntur ut consectetur dolorum at nemo sapiente facilis velit ex
-          ab dolorem quisquam obcaecati eaque cumque veritatis quam deserunt vel
-          necessitatibus totam dolor, reprehenderit eos? Praesentium sint soluta
-          in cum impedit, est doloribus itaque architecto quam tempore molestiae
-          dolor ullam vel quasi temporibus. Molestiae earum laboriosam nulla
-          nemo inventore ex deleniti mollitia! In vel excepturi iste officiis
-          cupiditate officia, nihil unde veritatis eligendi repellendus illo
-          illum voluptas voluptatem minima ea quidem modi magni aliquid. Sed
-          inventore nulla impedit aspernatur voluptate aut possimus perferendis
-          deleniti itaque, vel nobis ducimus molestias nesciunt. Eius quo
-          deserunt modi, saepe magnam nesciunt voluptas sit neque nisi
-          voluptatum impedit nemo vero! Distinctio ex quos temporibus
-          exercitationem suscipit minima vel quo. Illum perspiciatis nam aut,
-          repellat debitis distinctio facere, sapiente, inventore libero ducimus
-          magnam recusandae autem iste a ipsum quas tempore voluptas. Ducimus
-          laborum, consectetur laboriosam quam, exercitationem perspiciatis,
-          possimus nam laudantium culpa suscipit tempore cum. Fuga aperiam aut
-          quasi error blanditiis cumque ducimus quibusdam delectus culpa quo, at
-          quos dignissimos quam expedita ratione nihil vero placeat quisquam
-          tempore hic magnam neque ex! Accusamus sapiente molestiae ut iure
-          perspiciatis, eum officia id natus recusandae inventore doloremque
-          quos exercitationem beatae quod, explicabo reiciendis atque
-          necessitatibus quae dolorum repellat delectus itaque? Doloribus
-          distinctio pariatur magni praesentium aspernatur nulla quas velit.
-          Quasi libero tenetur similique at quia exercitationem consequatur
-          recusandae expedita voluptatum, ullam atque commodi ducimus, adipisci
-          laudantium. Et veritatis quas cumque inventore. Cupiditate, quod ea.
-          Cumque unde, modi saepe quod reprehenderit iure aspernatur, ipsam
-          voluptates corporis, tenetur deleniti beatae eum laborum officiis
-          adipisci magnam error vel. Dolor ullam praesentium autem nisi
-          asperiores quas accusantium vero vel, dolorum necessitatibus tempore
-          soluta, illo officiis laudantium officia qui porro sit suscipit illum.
-          Deleniti qui pariatur ipsum ipsa, aliquid non vel, quos excepturi,
-          itaque id hic? Earum eligendi ea eos harum, placeat culpa recusandae
-          quas officiis nihil adipisci, nemo autem vitae nobis fugit dolore
-          laboriosam vero! Cupiditate assumenda modi totam consequuntur
-          laboriosam fugit quos animi nemo, minus qui quasi incidunt libero sint
-          adipisci similique at harum odio earum quibusdam eaque magni
-          praesentium! Veritatis provident consectetur nobis assumenda, impedit
-          culpa excepturi nesciunt, sunt possimus quos blanditiis natus deleniti
-          rerum iusto! Harum nemo asperiores repellendus id animi quaerat
-          tempora, magni cum explicabo quibusdam? Harum esse molestias quo
-          deserunt minima at sapiente ipsam quibusdam modi magni asperiores iure
-          voluptatum facilis laudantium, optio vel hic laboriosam eligendi
-          perferendis! Dolor, eum! Totam culpa, eaque aspernatur et asperiores
-          laboriosam dolorum accusantium accusamus ducimus nisi corporis
-          quibusdam sequi nobis quos veniam deleniti velit ut, veritatis autem
-          enim facere voluptas sit. Quos, quibusdam illo iure velit temporibus
-          necessitatibus voluptatum saepe consequatur debitis libero deserunt
-          ipsa quam sequi, explicabo laborum quas adipisci, eaque ea
-          reprehenderit veniam repudiandae odio? Voluptas perferendis nobis
-          molestias a dicta! Quos voluptatem expedita veniam alias earum numquam
-          natus quisquam commodi perferendis odit harum beatae reiciendis
-          eligendi dicta, officia repellat ea omnis fuga!
-        </p>
-      </div>
-    </div>
-    <footer class="site-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-6">
-            <h6>LegendGG</h6>
-            <p class="text-justify">
-              isn't endorsed by Riot Games and doesn't reflect the views or
-              opinions of Riot Games or anyone officially involved in producing
-              or managing Riot Games properties. Riot Games, and all associated
-              properties are trademarks or registered trademarks of Riot Games,
-              Inc.
-            </p>
-          </div>
-          <div class="col-xs-6 col-md-3">
-            <h6>Quick Links</h6>
-            <ul class="footer-links">
-              <li><a href="#">Champion</a></li>
-              <li><a href="#">Item</a></li>
-              <li><a href="#">Summoner</a></li>
-            </ul>
-          </div>
-        </div>
-        <hr />
       </div>
       <div class="container">
         <div class="row">
@@ -396,29 +193,23 @@
             </p>
           </div>
 
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <ul class="social-icons">
-              <li>
-                <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
-              </li>
-              <li>
-                <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
-              </li>
-              <li>
-                <a class="github" href="#"><i class="fa fa-github"></i></a>
-              </li>
-              <li>
-                <a class="instagram" href="#"
-                  ><i class="fa fa-instagram"></i
-                ></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
     <!--===== SCRIPT =====-->
-    <script src="js/champion.js"></script>
+    <script src="js/API.js"></script>
+    <script
+      src="https://kit.fontawesome.com/b4299c0961.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <!--==================-->
+
+    =======
+    <!--===== SCRIPT =====-->
+
     <script src="js/API.js"></script>
     <script
       src="https://kit.fontawesome.com/b4299c0961.js"

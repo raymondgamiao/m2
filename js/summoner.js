@@ -173,7 +173,6 @@ async function matchHistory() {
 
     //player icon
     const playerIcon = document.createElement("img");
-
     playerIcon.width = 100;
     playerIcon.height = 100;
 
@@ -200,14 +199,14 @@ async function matchHistory() {
     for (let x in matchData.info.participants) {
       //get match details of player
       let player = matchData.info.participants[x];
-      let img = matchData.info.participants[x].championName;
-      playerIcon.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
-        .split(" ")
-        .join("")}.png`;
 
       if (
         player.summonerName == document.getElementById("summName").innerText
       ) {
+        let img = matchData.info.participants[x].championName;
+        playerIcon.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
+          .split(" ")
+          .join("")}.png`;
         let team = player.teamId;
         //victory or defeat
         for (const x of matchData.info.teams) {
@@ -241,6 +240,10 @@ async function matchHistory() {
         itemsWrapper.appendChild(itemsTop);
         itemsWrapper.appendChild(itemsBottom);
         wrapper.appendChild(itemsWrapper);
+        let link = `http://ddragon.leagueoflegends.com/cdn/12.13.1/data/en_US/item.json`;
+        const response = await fetch(link);
+        const data = await response.json();
+
         let itemLink =
           "http://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/";
         //individual items
@@ -249,49 +252,91 @@ async function matchHistory() {
           img.src = itemLink + player.item0 + ".png";
           img.height = 20;
           img.width = 20;
-          itemsTop.appendChild(img);
+          img.setAttribute("data-bs-toggle", "tooltip");
+          img.setAttribute("data-bs-title", data.data[player.item0].name);
+          img.setAttribute("data-bs-placement", "top");
+          const a = document.createElement("a");
+          a.href = "insiteitem.html?" + player.item0;
+          a.appendChild(img);
+          itemsTop.appendChild(a);
         }
         if (player.item1 !== 0) {
           const img = document.createElement("img");
           img.src = itemLink + player.item1 + ".png";
           img.height = 20;
           img.width = 20;
-          itemsTop.appendChild(img);
+          img.setAttribute("data-bs-toggle", "tooltip");
+          img.setAttribute("data-bs-title", data.data[player.item1].name);
+          img.setAttribute("data-bs-placement", "top");
+          const a = document.createElement("a");
+          a.href = "insiteitem.html?" + player.item1;
+          a.appendChild(img);
+          itemsTop.appendChild(a);
         }
         if (player.item2 !== 0) {
           const img = document.createElement("img");
           img.src = itemLink + player.item2 + ".png";
           img.height = 20;
           img.width = 20;
-          itemsTop.appendChild(img);
+          img.setAttribute("data-bs-toggle", "tooltip");
+          img.setAttribute("data-bs-title", data.data[player.item2].name);
+          img.setAttribute("data-bs-placement", "top");
+          const a = document.createElement("a");
+          a.href = "insiteitem.html?" + player.item2;
+          a.appendChild(img);
+          itemsTop.appendChild(a);
         }
         if (player.item3 !== 0) {
           const img = document.createElement("img");
           img.src = itemLink + player.item3 + ".png";
           img.height = 20;
           img.width = 20;
-          itemsTop.appendChild(img);
+          img.setAttribute("data-bs-toggle", "tooltip");
+          img.setAttribute("data-bs-title", data.data[player.item3].name);
+          img.setAttribute("data-bs-placement", "top");
+          const a = document.createElement("a");
+          a.href = "insiteitem.html?" + player.item3;
+          a.appendChild(img);
+          itemsTop.appendChild(a);
         }
         if (player.item4 !== 0) {
           const img = document.createElement("img");
           img.src = itemLink + player.item4 + ".png";
           img.height = 20;
           img.width = 20;
-          itemsBottom.appendChild(img);
+          img.setAttribute("data-bs-toggle", "tooltip");
+          img.setAttribute("data-bs-title", data.data[player.item4].name);
+          img.setAttribute("data-bs-placement", "top");
+          const a = document.createElement("a");
+          a.href = "insiteitem.html?" + player.item4;
+          a.appendChild(img);
+          itemsBottom.appendChild(a);
         }
         if (player.item5 !== 0) {
           const img = document.createElement("img");
           img.src = itemLink + player.item5 + ".png";
           img.height = 20;
           img.width = 20;
-          itemsBottom.appendChild(img);
+          img.setAttribute("data-bs-toggle", "tooltip");
+          img.setAttribute("data-bs-title", data.data[player.item5].name);
+          img.setAttribute("data-bs-placement", "top");
+          const a = document.createElement("a");
+          a.href = "insiteitem.html?" + player.item5;
+          a.appendChild(img);
+          itemsBottom.appendChild(a);
         }
         if (player.item6 !== 0) {
           const img = document.createElement("img");
           img.src = itemLink + player.item6 + ".png";
           img.height = 20;
           img.width = 20;
-          itemsBottom.appendChild(img);
+          img.setAttribute("data-bs-toggle", "tooltip");
+          img.setAttribute("data-bs-title", data.data[player.item6].name);
+          img.setAttribute("data-bs-placement", "top");
+          const a = document.createElement("a");
+          a.href = "insiteitem.html?" + player.item6;
+          a.appendChild(img);
+          itemsBottom.appendChild(a);
         }
       }
     }
@@ -300,7 +345,7 @@ async function matchHistory() {
     const team1 = document.createElement("div");
     team1.classList.add("team1", "d-flex", "flex-column", "text-start");
 
-    if (matchData.info.teams[0].win) {
+    if (matchData.info.teams[0].win == true) {
       team1.append("win");
     } else {
       team1.append("lose");
@@ -352,6 +397,13 @@ async function matchHistory() {
     }
     wrapper.appendChild(team2);
   }
+  //initialize tooltips
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  const tooltipList = [...tooltipTriggerList].map(
+    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+  );
 }
 
 matchHistory();
