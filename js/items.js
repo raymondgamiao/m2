@@ -26,11 +26,11 @@ async function getItems() {
     let imgSrc = `https://ddragon.leagueoflegends.com/cdn/12.13.1/img/item/${data.data[x].image.full}`;
     if (data.data[x].gold.purchasable) {
       if (filters.length == 0) {
-        txt += `<div class="m-2" style="width: 5rem;">`;
+        txt += `<div class="m-2 img-div" style="width: 5rem;">`;
         txt += `
         <a href="insiteitem.html?${x}">
         <img src="${imgSrc}" 
-        class="border border-warning rounded img-fluid" 
+        class="border border-warning rounded img-thumbnail " 
         alt="..."
         data-bs-toggle = "tooltip"
         data-bs-title = "${data.data[x].name}"
@@ -56,11 +56,11 @@ async function getItems() {
         const found = filterArr.every((r) => tagArr.includes(r));
 
         if (found) {
-          txt += `<div class="m-2" style="width: 5rem;">`;
+          txt += `<div class="m-2 img-div" style="width: 5rem;">`;
           txt += `
         <a href="insiteitem.html?${x}">
         <img src="${imgSrc}" 
-        class="border border-warning rounded img-fluid" 
+        class="border border-warning rounded img-fluid img-thumbnail " 
         alt="..."
         data-bs-toggle = "tooltip"
         data-bs-title = "${data.data[x].name}"
