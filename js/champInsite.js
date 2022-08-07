@@ -56,6 +56,37 @@ async function showChamp() {
   document.getElementById("rDesc").innerText =
     data.data[champ].spells[3].description;
 
+  //skins
+  const slideWrapper = document.getElementById("skinsInner");
+
+  const skinImgLink =
+    "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/";
+  for (x of data.data[champ].skins) {
+    let slide = document.createElement("div");
+    slide.classList.add("carousel-item");
+    if (x.num == 0) {
+      slide.classList.add("active");
+    }
+    slide.setAttribute("data-bs-interval", "10000");
+    let slideImg = document.createElement("img");
+    slideImg.src = skinImgLink + champ + "_" + x.num + ".jpg";
+    slideImg.classList.add("d-block", "w-100");
+    let slideCaptionWrap = document.createElement("div");
+    slideCaptionWrap.classList.add(
+      "carousel-caption",
+      "d-none",
+      "d-md-block",
+      "text-white-50"
+    );
+    let slideCaption = document.createElement("h5");
+    slideCaption.classList.add("carousel-title");
+    slideCaption.innerText = x.name;
+
+    slideWrapper.appendChild(slide);
+    slide.appendChild(slideImg);
+    slide.appendChild(slideCaptionWrap);
+    slideCaptionWrap.appendChild(slideCaption);
+  }
   //initialize tooltips
   /*    const tooltipTriggerList = document.querySelectorAll(
       '[data-bs-toggle="tooltip"]'

@@ -13,13 +13,14 @@ async function getChampions() {
   for (let x in data.data) {
     let imgSrc = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${x}.png`;
     if (filters.length == 0) {
-      txt += `<div class="champion mx-3 mb-3 text-center" style="width: 120px">
+      txt += `<div class="champion img-div mx-3 mb-3 text-center" style="width: 120px">
       <a href="insiteChamp.html?${data.data[x].id}">
-        <img src="${imgSrc}" alt="..." class="img-fluid">
+        <img src="${imgSrc}" alt="..." class="img-fluid img-thumbnail">
       </a>
       <h5 class="mt-2 mb-0">${data.data[x].name}</h5>
-      <p class="small">${data.data[x].title}</p>
+      
       </div>`;
+      //<p class="small">${data.data[x].title}</p>
     } else {
       const filterArr = [];
       for (i = 0; i < filters.length; i++) {
@@ -31,9 +32,9 @@ async function getChampions() {
       }
       const found = filterArr.every((r) => tagArr.includes(r));
       if (found) {
-        txt += `<div class="champion mx-3 mb-3 text-center" style="width: 120px">
+        txt += `<div class="champion  img-div mx-3 mb-3 text-center" style="width: 120px">
         <a href="insiteChamp.html?${data.data[x].id}">
-          <img src="${imgSrc}" alt="..." class="img-fluid">
+          <img src="${imgSrc}" alt="..." class="img-fluid img-thumbnail">
         </a>
         <h5 class="mt-2 mb-0">${data.data[x].name}</h5>
         <p class="small">${data.data[x].title}</p>
@@ -103,6 +104,7 @@ function addFilter(filter) {
   //hide mga di pasok sa filter
   getChampions();
 }
+
 function removeFilter(filter) {
   const activeFilter = document.getElementById("activeFilter");
   const filters = activeFilter.querySelectorAll(".filter");
@@ -113,3 +115,26 @@ function removeFilter(filter) {
     }
   }
 }
+
+let calcScrollValue = () => {
+  let scrollProgress = document.getElementById("progress");
+  let progressValue = document.getElementById("progress-value");
+  let pos = document.documentElement.scrollTop;
+  let calcHeight =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+  let scrollValue = Math.round((pos * 100) / calcHeight);
+  if (pos > 100) {
+    scrollProgress.style.display = "grid";
+  } else {
+    scrollProgress.style.display = "none";
+  }
+  scrollProgress.addEventListener("click", () => {
+    document.documentElement.scrollTop = 0;
+  });
+  scrollProgress.style.background = `conic-gradient(#03cc65 ${scrollValue}%, #d7d7d7 ${scrollValue}%)`;
+};
+window.onscroll = calcScrollValue;
+
+getChampions();
+calcScrollValue();

@@ -17,6 +17,67 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="CSS/style.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html::-webkit-scrollbar {
+        width: 0.4rem;
+      }
+      html::-webkit-scrollbar-thumb {
+        background-color: #7777;
+        border-radius: 1rem;
+      }
+      html::-webkit-scrollbar-track {
+        background-color: #17171a;
+      }
+      body {
+        background-color: #141433;
+        color: white;
+      }
+      .userInput {
+        border: 0;
+        outline: 0;
+        background: none;
+      }
+      .search_icon {
+        color: black;
+        text-decoration: none;
+      }
+      .img-div {
+        padding: 5px;
+        transition: all 0.2s ease-in-out;
+      }
+
+      .img-div:hover {
+        transform: translateY(10px);
+      }
+      #progress {
+        position: fixed;
+        bottom: 20px;
+        right: 10px;
+        height: 50px;
+        width: 50px;
+        display: none;
+        place-items: center;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+      #progress-value {
+        display: block;
+        height: calc(100% - 15px);
+        width: calc(100% - 15px);
+        background-color: #141433;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 35px;
+        color: #ffffff;
+      }
+    </style>
     <!--=================-->
   </head>
 
@@ -91,6 +152,11 @@
         id="champions"
         class="d-flex flex-wrap justify-content-center text-white pb-5"
       ></div>
+      <div id="progress">
+        <button id="progress-value">
+          <i class="fa-solid fa-arrow-up fa-xs"></i>
+        </button>
+      </div>
     </div>
     <!-- off canvas fo filter -->
     <div
@@ -124,6 +190,7 @@
     <!--===== SCRIPT =====-->
     <script src="js/config.js"></script>
     <script src="js/champions.js"></script>
+
     <script
       src="https://kit.fontawesome.com/b4299c0961.js"
       crossorigin="anonymous"
