@@ -97,6 +97,10 @@ async function getLeaderboard(server, page) {
   const response = await fetch(leaderboardLink);
   const data = await response.json();
   console.log(data);
+  const searchResult = document.getElementById("searchResult");
+  for (x of data.entries) {
+    searchResult.innerHTML += `<a href="summoners.html?&server=${server}&name=${x.summonerName}"><li class="searchResult">${x.summonerName}</li></a>`;
+  }
   //sort by league points from highest to lowest
   data.entries.sort((a, b) => {
     return b.leaguePoints - a.leaguePoints;
@@ -120,7 +124,7 @@ async function getLeaderboard(server, page) {
               }.png" 
               width=30 
               height=30>`;
-    txt += `<a href="summoners.html?region=${region}&server=${server}&name=${data.entries[i].summonerName}&summonerId=${data.entries[i].summonerId}&puuid=${data2.puuid}&rank=${data.tier}">`;
+    txt += `<a href="summoners.html?&server=${server}&name=${data.entries[i].summonerName}">`;
     txt += `${data.entries[i].summonerName}
               </a>
         </td>
@@ -147,4 +151,28 @@ async function getLeaderboard(server, page) {
   }
   //insert data into table
   document.getElementById("summoners").innerHTML = txt;
+}
+function searchSummoner() {
+  const userInput = document.getElementById("userInput");
+  const query = userInput.value.toUpperCase();
+  const list = document.getElementById("searchResult");
+  const summoners = list.querySelectorAll(".searchResult");
+
+  if (query.length > 0) {
+    list.style.display = "";
+  } else {
+    list.style.display = "none";
+  }
+  const visible = list.querySelectorAll("a li:not([style*='display:none'])");
+  console.log(visible);
+  //search all cards for matches with search query
+  //if match then show, else hide
+  for (i = 0; i < summoners.length; i++) {
+    let champName = summoners[i].innerText;
+    if (champName.toUpperCase().indexOf(query) > -1) {
+      summoners[i].style.display = "";
+    } else {
+      summoners[i].style.display = "none";
+    }
+  }
 }

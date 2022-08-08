@@ -80,16 +80,16 @@
                     name=""
                     placeholder="Search..."
                     id="userInput"
+                    onkeyup="searchSummoner()"
                   />
-                  <a
-                    href="#"
-                    class="search_icon"
-                    onclick="getSummonerData(server,document.getElementById('userInput').value)"
+                  <a href="#" class="search_icon"
                     ><i class="fas fa-search"></i
                   ></a>
                 </div>
               </div>
-              <div id="searchResult"></div>
+              <div id="searchResultWrap">
+                <ul id="searchResult" style="display: none"></ul>
+              </div>
             </div>
           </div>
         </div>

@@ -1,12 +1,9 @@
 const riotKey = config.riotKey;
 const url = window.location.href.split("?");
-const query = url[url.length - 1];
+const query = url[1];
 const params = query.split("&");
 const server = params[1].split("=")[1];
 const summonerName = params[2].split("=")[1];
-const summonerId = params[3].split("=")[1];
-const puuid = params[4].split("=")[1];
-
 let region = "";
 switch (server) {
   case "na1":
@@ -31,15 +28,14 @@ switch (server) {
 }
 
 async function profile() {
-  //summoner v4  by summ ID to get puuid
-
-  //https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/MU%20APA?api_key=RGAPI-8a8f861a-2101-42bf-b3f7-9e7a199e41ce
+  //summoner v4  by summ name to get puuid
   let link1 = `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${riotKey}`;
   const response1 = await fetch(link1);
   const data1 = await response1.json();
+  console.log(data1);
 
   //league v4 by summ ID to get rank
-  let link2 = `https://${server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${riotKey}`;
+  let link2 = `https://${server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${data1.id}?api_key=${riotKey}`;
   const response2 = await fetch(link2);
   const data2 = await response2.json();
   //console.log(data1.puuid);
@@ -60,10 +56,12 @@ async function profile() {
   summStats += `<p class="m-0">${data2[0].tier} | ${data2[0].leaguePoints} LP</p>`;
   summStats += `<small>${data2[0].wins} wins | ${data2[0].losses} losses</small>`;
   document.getElementById("summStats").innerHTML = summStats;
+  bestChamps(data1.id);
+  matchHistory(data1.puuid);
 }
 profile();
 
-async function bestChamps() {
+async function bestChamps(summonerId) {
   //Get all champion mastery entries sorted by number of champion points descending,
   let link = `https://${server}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${summonerId}?api_key=${riotKey}`;
   const response = await fetch(link);
@@ -138,9 +136,8 @@ async function bestChamps() {
 
   document.getElementById("bestChamps").innerHTML = txt;
 }
-bestChamps();
 
-async function matchHistory() {
+async function matchHistory(puuid) {
   //Get a list of match ids by puuid
   let link = `https://${region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${riotKey}`;
   const response = await fetch(link);
@@ -405,5 +402,3 @@ async function matchHistory() {
     (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
   );
 }
-
-matchHistory();

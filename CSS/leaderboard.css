@@ -18,9 +18,13 @@ h2 {
   background-color: white;
   border-radius: 5px;
 }
-.searchResult {
-  display: none;
+#searchResult {
+  position: absolute;
+  background-color: #ccc;
+  max-height: 20vh;
+  overflow-y: scroll;
 }
+
 .userInput {
   border: 0;
   outline: 0;
