@@ -49,9 +49,10 @@ h2 {
 }
 .pagination li a.page-link {
   color: #fff;
-  background: #4b6584;
+  background: #d753ff;
   font-size: 22px;
   font-weight: 400;
+  font-style: bold;
   line-height: 34px;
   height: 36px;
   width: 36px;
@@ -62,7 +63,7 @@ h2 {
   overflow: hidden;
   position: relative;
   z-index: 1;
-  transition: all 0.3s ease 0s;
+  transition: all 0.1s ease 0s;
 }
 .pagination li a.page-link:hover,
 .pagination li a.page-link:focus,
@@ -75,14 +76,14 @@ h2 {
 .pagination li a.page-link:before,
 .pagination li a.page-link:after {
   content: "";
-  background: linear-gradient(#4b6584 50%, #eb3b5a 50%);
+  background: linear-gradient(#141433 50%, #d753ff 50%);
   height: 200%;
   width: 100%;
   position: absolute;
   left: 0;
   top: 0;
   z-index: -1;
-  transition: all 0.4s ease 0s;
+  transition: all 0.3s ease 0s;
 }
 .pagination li a.page-link:after {
   opacity: 0;
@@ -134,7 +135,7 @@ h2 {
   margin-left: 10px;
 }
 .summonerName a:hover {
-  color: #eb3b5a;
+  color: #d753ff;
 }
 .rank {
   color: #ffffff;
@@ -145,7 +146,7 @@ h2 {
   height: 8px;
 }
 .progress-bar {
-  background-color: #4b6584;
+  background-color: #d753ff;
 }
 .winrateTH {
   max-width: 175px;
