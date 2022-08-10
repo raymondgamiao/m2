@@ -228,6 +228,11 @@ ul {
   height: 100px;
   border: 3px solid #eceeef;
   padding: 15px;
+  overflow-y: scroll;
+}
+
+.infoSearch a li:hover {
+  background-color: red;
 }
 
 /* Search Bar Button region*/
@@ -255,6 +260,13 @@ ul {
 
 .searchRegion button:focus {
   outline: orange 5px auto;
+}
+
+.selected {
+  color: #080808;
+  background-color: #d753ff !important;
+  text-decoration: none;
+  box-shadow: 0 3px 3px 1px rgb(245, 240, 240);
 }
 
 /*Na Add ko CSS By Matt*/
