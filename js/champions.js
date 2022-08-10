@@ -59,10 +59,33 @@ function searchChampions() {
   for (i = 0; i < champs.length; i++) {
     let champName = champs[i].innerText;
     if (champName.toUpperCase().indexOf(query) > -1) {
-      champs[i].style.display = "";
+      //champs[i].style.display = "";
+      champs[i].classList.add("visible");
+      champs[i].classList.remove("hidden");
     } else {
-      champs[i].style.display = "none";
+      //champs[i].style.display = "none";
+      champs[i].classList.add("hidden");
+      champs[i].classList.remove("visible");
     }
+  }
+
+  //create no result element
+  let noResult = document.createElement("h3");
+  noResult.innerText = "No result";
+  noResult.classList.add("noResult", "hidden");
+  list.append(noResult);
+
+  //search visible
+  const visible = list.querySelectorAll(".visible");
+  const noResultItem = list.querySelector(".noResult");
+
+  //if everything is hidden, show "no result"
+  if (visible.length == 0) {
+    noResultItem.classList.add("visible");
+    noResultItem.classList.remove("hidden");
+  } else {
+    noResultItem.classList.add("hidden");
+    noResultItem.classList.remove("visible");
   }
 }
 

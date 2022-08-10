@@ -163,16 +163,37 @@ function searchSummoner() {
   } else {
     list.style.display = "none";
   }
-  const visible = list.querySelectorAll("a li:not([style*='display:none'])");
-  console.log(visible);
+
   //search all cards for matches with search query
   //if match then show, else hide
   for (i = 0; i < summoners.length; i++) {
     let champName = summoners[i].innerText;
     if (champName.toUpperCase().indexOf(query) > -1) {
-      summoners[i].style.display = "";
+      // summoners[i].style.display = "";
+      summoners[i].classList.add("visible");
+      summoners[i].classList.remove("hidden");
     } else {
-      summoners[i].style.display = "none";
+      // summoners[i].style.display = "none";
+      summoners[i].classList.add("hidden");
+      summoners[i].classList.remove("visible");
     }
+  }
+  //create no result element
+  let noResult = document.createElement("li");
+  noResult.innerText = "No result";
+  noResult.classList.add("noResult", "hidden");
+  list.append(noResult);
+
+  //search visible
+  const visible = list.querySelectorAll(".visible");
+  const noResultItem = list.querySelector(".noResult");
+
+  //if everything is hidden, show "no result"
+  if (visible.length == 0) {
+    noResultItem.classList.add("visible");
+    noResultItem.classList.remove("hidden");
+  } else {
+    noResultItem.classList.add("hidden");
+    noResultItem.classList.remove("visible");
   }
 }

@@ -150,3 +150,9 @@ h2 {
 .winrateTH {
   max-width: 175px;
 }
+.hidden {
+  display: none;
+}
+.visible {
+  display: block;
+}
