@@ -97,7 +97,7 @@ async function getLeaderboard(server, page) {
   const response = await fetch(leaderboardLink);
   const data = await response.json();
   console.log(data);
-  const searchResult = document.getElementById("searchResult");
+  const searchResult = document.querySelector("#searchResultWrap ul");
   for (x of data.entries) {
     searchResult.innerHTML += `<a href="summoners.html?&server=${server}&name=${x.summonerName}"><li class="searchResult">${x.summonerName}</li></a>`;
   }
@@ -152,6 +152,7 @@ async function getLeaderboard(server, page) {
   //insert data into table
   document.getElementById("summoners").innerHTML = txt;
 }
+
 function searchSummoner() {
   const userInput = document.getElementById("userInput");
   const query = userInput.value.toUpperCase();

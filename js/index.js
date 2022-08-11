@@ -17,18 +17,18 @@ async function populate() {
   const response = await fetch(link);
   const data = await response.json();
 
-  const searchResult = document.getElementById("infoSearch");
-  searchResult.innerHTML = "";
+  const searchResult = document.querySelector("#infoSearch ul");
+  let txt = "";
 
   if (query == "Summoner") {
     for (x of data.entries) {
-      searchResult.innerHTML += `<a href="summoners.html?&server=${server}&name=${x.summonerName}"><li class="searchResult">${x.summonerName}</li></a>`;
+      txt += `<a href="summoners.html?&server=${server}&name=${x.summonerName}"><li class="searchResult">${x.summonerName}</li></a>`;
     }
   } else if (query == "Item") {
     var keyNames = Object.keys(data.data);
     let count = 0;
     for (x in data.data) {
-      searchResult.innerHTML += `<a href="insiteItem.html?${keyNames[count]}"><li class="searchResult">${data.data[x].name}</li></a>`;
+      txt += `<a href="insiteItem.html?${keyNames[count]}"><li class="searchResult">${data.data[x].name}</li></a>`;
       count++;
     }
   } else {
@@ -36,10 +36,11 @@ async function populate() {
 
     let count = 0;
     for (x in data.data) {
-      searchResult.innerHTML += `<a href="insiteChamp.html?${keyNames[count]}"><li class="searchResult">${data.data[x].name}</li></a>`;
+      txt += `<a href="insiteChamp.html?${keyNames[count]}"><li class="searchResult">${data.data[x].name}</li></a>`;
       count++;
     }
   }
+  searchResult.innerHTML = txt;
 }
 populate();
 //code ni matt sa dropdown
@@ -91,14 +92,15 @@ function search() {
   }
 
   //create no result element
-  let noResult = document.createElement("li");
+  /*   let noResult = document.createElement("li");
   noResult.innerText = "No result";
   noResult.classList.add("noResult", "hidden");
   list.append(noResult);
-
+ */
   //search visible
   const visible = list.querySelectorAll(".visible");
-  const noResultItem = list.querySelector(".noResult");
+  const noResultItem = document.querySelector(".noResult");
+  console.log(noResultItem);
 
   //if everything is hidden, show "no result"
   if (visible.length == 0) {
