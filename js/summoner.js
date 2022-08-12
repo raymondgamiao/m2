@@ -210,7 +210,7 @@ async function matchHistory(puuid) {
           if (x.teamId == team) {
             if (x.win) {
               winLose.innerText = "VICTORY";
-              wrapper.classList.add({'color: blue'});
+              wrapper.classList.add("bg-success");
             } else {
               wrapper.classList.add("bg-danger");
               winLose.innerText = "DEFEAT";
