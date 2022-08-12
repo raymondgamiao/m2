@@ -30,7 +30,7 @@ async function getItems() {
         txt += `
         <a href="insiteitem.html?${x}">
         <img src="${imgSrc}" 
-        class="border border-warning rounded img-thumbnail " 
+        class=" rounded img-thumbnail " 
         alt="..."
         data-bs-toggle = "tooltip"
         data-bs-title = "${data.data[x].name}"
@@ -60,7 +60,7 @@ async function getItems() {
           txt += `
         <a href="insiteitem.html?${x}">
         <img src="${imgSrc}" 
-        class="border border-warning rounded img-fluid img-thumbnail " 
+        class=" rounded img-fluid img-thumbnail " 
         alt="..."
         data-bs-toggle = "tooltip"
         data-bs-title = "${data.data[x].name}"
@@ -99,10 +99,35 @@ function searchItems() {
   for (i = 0; i < items.length; i++) {
     itemName = items[i].getAttribute("data-bs-title");
     if (itemName.toUpperCase().indexOf(query) > -1) {
-      items[i].parentNode.parentNode.style.display = "";
+      // items[i].parentNode.parentNode.style.display = "";
+      items[i].parentNode.parentNode.classList.add("visible");
+      items[i].parentNode.parentNode.classList.remove("hidden");
     } else {
-      items[i].parentNode.parentNode.style.display = "none";
+      // items[i].parentNode.parentNode.style.display = "none";
+      items[i].parentNode.parentNode.classList.add("hidden");
+      items[i].parentNode.parentNode.classList.remove("visible");
     }
+  }
+
+  //create no result element
+  let noResult = document.createElement("h3");
+  noResult.innerText = "No result";
+  noResult.classList.add("noResult", "hidden");
+  list.append(noResult);
+
+  //search visible
+  const visible = list.querySelectorAll(".visible");
+  const noResultItem = list.querySelector(".noResult");
+
+  //if everything is hidden, show "no result"
+  if (visible.length == 0) {
+    noResultItem.setAttribute("style", "display:block");
+    //    noResultItem.classList.add("visible");
+    //    noResultItem.classList.remove("hidden");
+  } else {
+    noResultItem.setAttribute("style", "display:none");
+    //    noResultItem.classList.add("hidden");
+    //    noResultItem.classList.remove("visible");
   }
 }
 
@@ -144,6 +169,7 @@ function addFilter(filter) {
   //hide mga di pasok sa filter
   getItems();
 }
+
 function removeFilter(filter) {
   const activeFilter = document.getElementById("activeFilter");
   const filters = activeFilter.querySelectorAll(".filter");
@@ -154,3 +180,24 @@ function removeFilter(filter) {
     }
   }
 }
+
+let calcScrollValue = () => {
+  let scrollProgress = document.getElementById("progress");
+  let progressValue = document.getElementById("progress-value");
+  let pos = document.documentElement.scrollTop;
+  let calcHeight =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+  let scrollValue = Math.round((pos * 100) / calcHeight);
+  if (pos > 100) {
+    scrollProgress.style.display = "grid";
+  } else {
+    scrollProgress.style.display = "none";
+  }
+  scrollProgress.addEventListener("click", () => {
+    document.documentElement.scrollTop = 0;
+  });
+  scrollProgress.style.background = `conic-gradient(#03cc65 ${scrollValue}%, #d7d7d7 ${scrollValue}%)`;
+};
+window.onscroll = calcScrollValue;
+calcScrollValue();

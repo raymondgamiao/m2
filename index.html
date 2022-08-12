@@ -74,26 +74,63 @@
                   </ul>
                 </div>
                 <div class="search_field">
-                  <input type="text" class="input" placeholder="Search" />
-                  <div class="infoSearch">
-                    
+                  <input
+                    type="text"
+                    class="input"
+                    placeholder="Search"
+                    id="userInput"
+                    onkeyup="search()"
+                  />
+                  <div
+                    class="infoSearch shadow"
+                    id="infoSearch"
+                    style="display: none"
+                  >
+                    <ul></ul>
+                    <ul>
+                      <a href="#">
+                        <li class="noResult hidden">No Result</li>
+                      </a>
+                    </ul>
                   </div>
                   <i class="fas fa-search"></i>
                 </div>
               </div>
-                <div class="searchRegion">
-                  <button type="button" class="btn btn-dark">NA</button>
-                  <button type="button" class="btn btn-dark">EUW</button>
-                  <button type="button" class="btn btn-dark">EUN</button>
-                  <button type="button" class="btn btn-dark">KR</button>
-                  <button type="button" class="btn btn-dark">BR</button>
-                  <button type="button" class="btn btn-dark">JP</button>
-                  <button type="button" class="btn btn-dark">RU</button>
-                  <button type="button" class="btn btn-dark">OCE</button>
-                  <button type="button" class="btn btn-dark">TR</button>
-                  <button type="button" class="btn btn-dark">LA1</button>
-                  <button type="button" class="btn btn-dark">LA2</button>
-                </div>
+              <div class="searchRegion">
+                <button type="button" class="btn btn-dark selected" value="na1">
+                  NA
+                </button>
+                <button type="button" class="btn btn-dark" value="br1">
+                  BR
+                </button>
+                <button type="button" class="btn btn-dark" value="la1">
+                  LA1
+                </button>
+                <button type="button" class="btn btn-dark" value="la2">
+                  LA2
+                </button>
+                <button type="button" class="btn btn-dark" value="kr">
+                  KR
+                </button>
+                <button type="button" class="btn btn-dark" value="jp1">
+                  JP
+                </button>
+                <button type="button" class="btn btn-dark" value="eun1">
+                  EUN
+                </button>
+                <button type="button" class="btn btn-dark" value="euw1">
+                  EUW
+                </button>
+                <button type="button" class="btn btn-dark" value="tr1">
+                  TR
+                </button>
+                <button type="button" class="btn btn-dark" value="ru">
+                  RU
+                </button>
+                <button type="button" class="btn btn-dark" value="oc1">
+                  LA2
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -235,6 +272,7 @@
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
       crossorigin="anonymous"
     ></script>
+    <script src="./js/config.js"></script>
     <script src="./js/index.js"></script>
     <!--==================-->
   </body>
