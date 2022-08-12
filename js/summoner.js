@@ -160,6 +160,7 @@ async function matchHistory(puuid) {
     wrapper.classList.add(
       "d-flex",
       "flex-row",
+      "flex-wrap",
       "justify-content-evenly",
       "align-items-center",
       "mb-3",
@@ -167,6 +168,14 @@ async function matchHistory(puuid) {
       "rounded"
     );
     matchHistory.appendChild(wrapper);
+
+    //hero, match type, match date, win/lose, KDA
+    const div1 = document.createElement("div");
+    div1.classList.add("div1", "flex-grow-1");
+
+    //items, team 1, team 2
+    const div2 = document.createElement("div");
+    div2.classList.add("div2", "flex-grow-1");
 
     //player icon
     const playerIcon = document.createElement("img");
@@ -186,8 +195,8 @@ async function matchHistory(puuid) {
     matchInfo.appendChild(gameCreation);
 
     //append elements into div
-    wrapper.appendChild(playerIcon);
-    wrapper.appendChild(matchInfo);
+    div1.appendChild(playerIcon);
+    div1.appendChild(matchInfo);
 
     //win or lose
     const winLoseWrapper = document.createElement("span");
@@ -210,7 +219,7 @@ async function matchHistory(puuid) {
           if (x.teamId == team) {
             if (x.win) {
               winLose.innerText = "VICTORY";
-              wrapper.classList.add({'color: blue'});
+              wrapper.classList.add("bg-success");
             } else {
               wrapper.classList.add("bg-danger");
               winLose.innerText = "DEFEAT";
@@ -218,15 +227,17 @@ async function matchHistory(puuid) {
           }
         }
         winLoseWrapper.appendChild(winLose);
-        wrapper.appendChild(winLoseWrapper);
+        div1.appendChild(winLoseWrapper);
         // txt += "<br /> " + player.summonerName;
         // txt += "<br />" + player.championName;
+
         //kda
         const kda = document.createElement("div");
         kda.innerText += player.kills + "/";
         kda.innerText += player.deaths + "/";
         kda.innerText += player.assists + "/";
         winLoseWrapper.appendChild(kda);
+        wrapper.appendChild(div1);
 
         //items
         const itemsWrapper = document.createElement("div");
@@ -236,7 +247,8 @@ async function matchHistory(puuid) {
         itemsBottom.classList.add("text-start");
         itemsWrapper.appendChild(itemsTop);
         itemsWrapper.appendChild(itemsBottom);
-        wrapper.appendChild(itemsWrapper);
+        div2.appendChild(itemsWrapper);
+        wrapper.appendChild(div2);
         let link = `http://ddragon.leagueoflegends.com/cdn/12.13.1/data/en_US/item.json`;
         const response = await fetch(link);
         const data = await response.json();
@@ -364,7 +376,7 @@ async function matchHistory(puuid) {
       }
       team1.appendChild(players);
     }
-    wrapper.appendChild(team1);
+    div2.appendChild(team1);
 
     //team 2
     const team2 = document.createElement("div");
@@ -392,7 +404,7 @@ async function matchHistory(puuid) {
       }
       team2.appendChild(players);
     }
-    wrapper.appendChild(team2);
+    div2.appendChild(team2);
   }
   //initialize tooltips
   const tooltipTriggerList = document.querySelectorAll(
