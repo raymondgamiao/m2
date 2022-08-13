@@ -310,6 +310,38 @@ ul {
   box-shadow: 0 3px 3px 1px rgb(245, 240, 240);
 }
 
+@media only screen and (max-width : 800px)
+{
+  #landingHeader video {
+    width: 200%;
+    height: auto;
+  }
+
+  #bannerText{
+    position: absolute;
+    z-index: 0; 
+    width: 50%;
+    left: 140px;
+    top: 170px;
+  }
+  .wrapper .search_box .dropdown:before {
+    display: none;
+  }
+  .search_box{
+    max-width: 50%;
+    margin: 0 auto;
+  }
+	.searchRegion{
+		width: 50%;
+    padding-top: 10px;
+		margin: 0 auto;
+	}
+  .infoSearch{
+    width: 50%;
+  }
+}
+
+
 /*Na Add ko CSS By Matt*/
 
 /*brand css*/
@@ -344,8 +376,9 @@ ul {
   margin-top: -30px;
 }
 @media only screen and (max-width: 800px) {
-  .brandhero {
-    align-items: center;
+  #brandhero {
+    display: block;
+    padding-left: 20%;
   }
 }
 
@@ -360,6 +393,15 @@ ul {
 .sectionabout {
   background: #191919;
   color: floralwhite;
+}
+
+@media only screen and (max-width: 800px) {
+  .sectionabout{
+    padding: auto;
+  }
+  img {
+    padding-left: 15%;
+  }
 }
 
 /*footer*/
