@@ -179,22 +179,19 @@ function searchSummoner() {
       summoners[i].classList.remove("visible");
     }
   }
-  //create no result element
-  let noResult = document.createElement("li");
-  noResult.innerText = "No result";
-  noResult.classList.add("noResult", "hidden");
-  list.append(noResult);
 
   //search visible
   const visible = list.querySelectorAll(".visible");
-  const noResultItem = list.querySelector(".noResult");
+  const noResultItem = document.querySelector(".noResult");
 
   //if everything is hidden, show "no result"
   if (visible.length == 0) {
-    noResultItem.classList.add("visible");
-    noResultItem.classList.remove("hidden");
+    noResultItem.setAttribute("style", "display:block");
+    //    noResultItem.classList.add("visible");
+    //    noResultItem.classList.remove("hidden");
   } else {
-    noResultItem.classList.add("hidden");
-    noResultItem.classList.remove("visible");
+    noResultItem.setAttribute("style", "display:hidden");
+    //    noResultItem.classList.add("hidden");
+    //    noResultItem.classList.remove("visible");
   }
 }

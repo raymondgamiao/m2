@@ -100,14 +100,15 @@ function search() {
   //search visible
   const visible = list.querySelectorAll(".visible");
   const noResultItem = document.querySelector(".noResult");
-  console.log(noResultItem);
 
   //if everything is hidden, show "no result"
   if (visible.length == 0) {
-    noResultItem.classList.add("visible");
-    noResultItem.classList.remove("hidden");
+    noResultItem.setAttribute("style", "display:block");
+    //    noResultItem.classList.add("visible");
+    //    noResultItem.classList.remove("hidden");
   } else {
-    noResultItem.classList.add("hidden");
-    noResultItem.classList.remove("visible");
+    noResultItem.setAttribute("style", "display: none");
+    //    noResultItem.classList.add("hidden");
+    //    noResultItem.classList.remove("visible");
   }
 }
