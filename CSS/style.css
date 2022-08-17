@@ -181,6 +181,12 @@ ul {
   font-size: 13px;
   text-align: left;
 }
+@media only screen and (min-width: 700px) {
+  .wrapper .search_box .dropdown .default_option {
+    text-transform: uppercase;
+    padding: 13px 15px;
+  }
+}
 
 .wrapper .search_box .dropdown ul {
   position: absolute;
