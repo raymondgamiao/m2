@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Summoner | LEGEND.GG</title>
+    <link rel="icon" type="image/x-icon" href="/media/img/favicon-32x32.png" />
+    <!--===== LINKS =====-->
+    <link rel="stylesheet" href="CSS/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Righteous&display=swap");
+      * {
+        font-family: "Montserrat", sans-serif;
+      }
+      body {
+        background-color: #141433;
+        color: #ffffff;
+      }
+      #profile {
+        background-position: 0 15%;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      #summName {
+        font-family: "Righteous", cursive;
+      }
+      .navbar-brand {
+        font-family: "Righteous", cursive;
+        font-size: 2rem;
+      }
+      .team1,
+      .team2 {
+        font-size: x-small;
+        width: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .div1 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-content: center;
+        align-items: center;
+      }
+      .div2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .bestChamp {
+        display: grid;
+        grid-template-columns: 35px 2fr 1.5fr 2fr;
+      }
+      .team1 a,
+      .team2 a {
+        text-decoration: none;
+        color: #ffffff;
+      }
+      .team1 a:hover,
+      .team2 a:hover {
+        color: #d753ff;
+      }
+    </style>
+    <!--=================-->
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg sticky-top bg-dark px-md-5">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Legend.GG</a>
+        <a
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="items.html">Items</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="champions.html">Champions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="leaderboards.html"
+                >Leaderboards</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- The header content -->
+    <div class="container h-100 contentwrapper">
+      <div class="row">
+        <div class="col-12 d-flex flex-wrap rounded py-3 my-5" id="profile">
+          <div class="d-flex flex-row align-items-center">
+            <img
+              id="pfp"
+              src="media/img/Loading_icon.gif"
+              alt=""
+              width="100"
+              height="100"
+              class="rounded img-thumbnail"
+            />
+            <h1 id="summName" class="ps-3">100 Sword</h1>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4 p-0">
+          <div class="d-flex flex-row p-3 rounded bg-dark align-items-center">
+            <img
+              id="rankIcon"
+              src="media/img/Loading_icon.gif"
+              alt=""
+              width="100"
+              height="100"
+            />
+            <div
+              class="d-flex flex-column text-center rounded align-items-center"
+              id="summStats"
+            >
+              <p>CHALLENGER | 1563 LP</p>
+              <p>253 wins | 179 losses</p>
+            </div>
+          </div>
+          <div id="bestChamps" class="p-3 rounded mt-3 bg-dark">
+            <img
+              src="media/img/Loading_icon.gif"
+              alt=""
+              width="100"
+              height="100"
+            />
+          </div>
+        </div>
+        <div class="col-12 col-lg-8 text-center p-0 ps-lg-3 pt-lg-0 pt-3 mb-5">
+          <div class="bg-dark rounded p-3" id="matchHistory">
+            <h3>Match History</h3>
+            <img
+              src="media/img/Loading_icon.gif"
+              alt=""
+              width="100"
+              height="100"
+              id="loadingGif"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adding Footer-->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h6>LegendGG</h6>
+            <p class="text-justify">
+              isn't endorsed by Riot Games and doesn't reflect the views or
+              opinions of Riot Games or anyone officially involved in producing
+              or managing Riot Games properties. Riot Games, and all associated
+              properties are trademarks or registered trademarks of Riot Games,
+              Inc.
+            </p>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <h6>Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="#">Champion</a></li>
+              <li><a href="#">Item</a></li>
+              <li><a href="#">Summoner</a></li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">
+              Copyright &copy; 2022 All Rights Reserved by
+              <a href="#">LegendGG</a>.
+            </p>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+              <li>
+                <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
+              </li>
+              <li>
+                <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li>
+                <a class="github" href="#"><i class="fa fa-github"></i></a>
+              </li>
+              <li>
+                <a class="instagram" href="#"
+                  ><i class="fa fa-instagram"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--===== SCRIPT =====-->
+    <script></script>
+    <script src="js/config.js"></script>
+    <script src="js/summoner.js"></script>
+
+    <script
+      src="https://kit.fontawesome.com/b4299c0961.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <!--==================-->
+  </body>
+</html>
