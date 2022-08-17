@@ -6,6 +6,8 @@ async function showItem() {
     "http://ddragon.leagueoflegends.com/cdn/12.13.1/data/en_US/item.json";
   const response = await fetch(link);
   const data = await response.json();
+  document.title = data.data[item].name + " | LEGEND.GG";
+
   console.log(data);
 
   //header part sa taas

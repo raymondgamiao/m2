@@ -7,6 +7,8 @@ async function showChamp() {
   const data = await response.json();
   console.log(data);
 
+  document.title = champ + " | LEGEND.GG";
+
   //replace placeholders
   //hero section
   document.getElementById("champTitle").innerText = data.data[champ].title;

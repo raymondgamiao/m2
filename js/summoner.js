@@ -4,6 +4,7 @@ const query = url[1];
 const params = query.split("&");
 const server = params[1].split("=")[1];
 const summonerName = params[2].split("=")[1];
+
 let region = "";
 switch (server) {
   case "na1":
@@ -32,7 +33,8 @@ async function profile() {
   let link1 = `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${riotKey}`;
   const response1 = await fetch(link1);
   const data1 = await response1.json();
-  console.log(data1);
+
+  document.title = data1.name + " | LEGEND.GG";
 
   //league v4 by summ ID to get rank
   let link2 = `https://${server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${data1.id}?api_key=${riotKey}`;
@@ -66,6 +68,7 @@ async function bestChamps(summonerId) {
   let link = `https://${server}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${summonerId}?api_key=${riotKey}`;
   const response = await fetch(link);
   const data = await response.json();
+
   //sort by champion points
   data.sort((a, b) => {
     return b.championPoints - a.championPoints;
@@ -85,7 +88,7 @@ async function bestChamps(summonerId) {
   for (i = 0; i < 10; i++) {
     for (const champs in result) {
       if (data[i].championId == result[champs].key) {
-        let img = result[champs].name;
+        /*         let img = result[champs].name;
         let imgSplit = "";
         if (img.indexOf(" ") >= 0) {
           imgSplit = img.split(" ");
@@ -95,18 +98,31 @@ async function bestChamps(summonerId) {
           imgSrc = imgSplit[0] + imgSplit[1];
         } else {
           imgSrc = img;
-        }
-        console.log(imgSrc);
+        } */
+        txt += "<div class='bestChamp py-2'>";
+        txt += `
+        <a href='insiteChamp.html?${champs}'>
+          <img 
+            src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${champs}.png" 
+            width='30'
+            height='30'
+            class='me-2'
+            data-bs-toggle ="tooltip"
+            data-bs-title = ${result[champs].name}
+            data-bs-placement = "top"
+          />
+        </a>`;
 
-        txt += `<img 
-        src="http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${imgSrc}.png" 
-        width='30'
-        height='30'
-        />`;
-        txt += `<span class="champName">` + result[champs].name + "</span> - ";
-        txt += "Level: " + data[i].championLevel;
-        txt += " pts: " + data[i].championPoints;
-        txt += "<br />";
+        txt += `<span class="champName">` + result[champs].name + "</span>";
+        txt +=
+          "<span class='champLevel'>Level: " +
+          data[i].championLevel +
+          "</span>";
+        txt +=
+          "<span class='champPoint'>" +
+          data[i].championPoints.toLocaleString() +
+          " pts</span>";
+        txt += "</div>";
         if (i == 0) {
           imgBanner = result[champs].name;
         }
@@ -177,6 +193,12 @@ async function matchHistory(puuid) {
     const div2 = document.createElement("div");
     div2.classList.add("div2", "flex-grow-1");
 
+    wrapper.appendChild(div1);
+    wrapper.appendChild(div2);
+
+    //link to champ
+    const playerChampLink = document.createElement("a");
+
     //player icon
     const playerIcon = document.createElement("img");
     playerIcon.width = 100;
@@ -195,7 +217,9 @@ async function matchHistory(puuid) {
     matchInfo.appendChild(gameCreation);
 
     //append elements into div
-    div1.appendChild(playerIcon);
+    div1.appendChild(playerChampLink);
+    playerChampLink.appendChild(playerIcon);
+
     div1.appendChild(matchInfo);
 
     //win or lose
@@ -207,12 +231,22 @@ async function matchHistory(puuid) {
       let player = matchData.info.participants[x];
 
       if (
-        player.summonerName == document.getElementById("summName").innerText
+        //player.summonerName == document.getElementById("summName").innerText
+        //player.summonerName == summonerName
+        puuid == player.puuid
       ) {
+        playerChampLink.href = `insiteChamp.html?${matchData.info.participants[x].championName}`;
+
         let img = matchData.info.participants[x].championName;
-        playerIcon.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
-          .split(" ")
-          .join("")}.png`;
+
+        playerIcon.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img}.png`;
+        playerIcon.setAttribute("data-bs-toggle", "tooltip");
+        playerIcon.setAttribute(
+          "data-bs-title",
+          matchData.info.participants[x].championName
+        );
+        playerIcon.setAttribute("data-bs-placement", "top");
+        const a = document.createElement("a");
         let team = player.teamId;
         //victory or defeat
         for (const x of matchData.info.teams) {
@@ -241,6 +275,12 @@ async function matchHistory(puuid) {
 
         //items
         const itemsWrapper = document.createElement("div");
+        itemsWrapper.classList.add(
+          "d-flex",
+          "flex-column",
+          "align-items-start",
+          "justify-content-center"
+        );
         const itemsTop = document.createElement("div");
         itemsTop.classList.add("text-start");
         const itemsBottom = document.createElement("div");
@@ -360,16 +400,28 @@ async function matchHistory(puuid) {
       team1.append("lose");
     }
     for (let x in matchData.info.participants) {
-      const players = document.createElement("span");
+      const players = document.createElement("a");
+      players.href = `insiteChamp.html?${matchData.info.participants[x].championName}`;
+
       if (matchData.info.participants[x].teamId == 100) {
         let img = matchData.info.participants[x].championName;
+
         const playersImg = document.createElement("img");
-        playersImg.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
+        playersImg.setAttribute("data-bs-toggle", "tooltip");
+        playersImg.setAttribute(
+          "data-bs-title",
+          matchData.info.participants[x].championName
+        );
+        playersImg.setAttribute("data-bs-placement", "top");
+        playersImg.classList.add("me-1");
+        playersImg.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img}.png`;
+        /*         playersImg.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
           .split(" ")
-          .join("")}.png`;
+          .join("")}.png`; */
         playersImg.width = 20;
         playersImg.height = 20;
         const playersName = document.createElement("a");
+        playersName.href = `summoners.html?&server=${server}&name=${matchData.info.participants[x].summonerName}`;
         playersName.innerHTML = matchData.info.participants[x].summonerName;
         players.appendChild(playersImg);
         players.appendChild(playersName);
@@ -392,12 +444,20 @@ async function matchHistory(puuid) {
       if (matchData.info.participants[x].teamId == 200) {
         let img = matchData.info.participants[x].championName;
         const playersImg = document.createElement("img");
+        playersImg.setAttribute("data-bs-toggle", "tooltip");
+        playersImg.setAttribute(
+          "data-bs-title",
+          matchData.info.participants[x].championName
+        );
+        playersImg.setAttribute("data-bs-placement", "top");
+        playersImg.classList.add("me-1");
         playersImg.src = `http://ddragon.leagueoflegends.com/cdn/12.13.1/img/champion/${img
           .split(" ")
           .join("")}.png`;
         playersImg.width = 20;
         playersImg.height = 20;
         const playersName = document.createElement("a");
+        playersName.href = `summoners.html?&server=${server}&name=${matchData.info.participants[x].summonerName}`;
         playersName.innerHTML = matchData.info.participants[x].summonerName;
         players.appendChild(playersImg);
         players.appendChild(playersName);
