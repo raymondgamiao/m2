@@ -20,6 +20,40 @@ async function showChamp() {
   document
     .getElementById("home")
     .setAttribute("style", `background-image: url(${imgLink})`);
+  //tags
+  const tagsDiv = document.getElementById("tags");
+  for (x of data.data[champ].tags) {
+    const tagImg = document.createElement("img");
+    switch (x) {
+      case "Fighter":
+        tagImg.src = "/media/img/Roleimage/FIGHTER.jpg";
+        break;
+      case "Tank":
+        tagImg.src = "/media/img/Roleimage/TANK.jpg";
+        break;
+      case "Mage":
+        tagImg.src = "/media/img/Roleimage/MAGE.jpg";
+        break;
+      case "Assassin":
+        tagImg.src = "/media/img/Roleimage/ASSASSIN.jpg";
+        break;
+      case "Marksman":
+        tagImg.src = "/media/img/Roleimage/MARKSMAN.jpg";
+        break;
+      case "Support":
+        tagImg.src = "/media/img/Roleimage/TANK.jpg";
+        break;
+    }
+
+    tagImg.classList.add("img-fluid", "w-25");
+
+    const tagName = document.createElement("h3");
+    tagName.innerText = x.toUpperCase();
+    tagName.classList.add("mb-5");
+    tagsDiv.append(tagImg);
+    tagsDiv.append(tagName);
+  }
+
   //stats
   document.getElementById("diff").innerText = data.data[champ].info.difficulty;
   document.getElementById("attack").innerText = data.data[champ].info.attack;
