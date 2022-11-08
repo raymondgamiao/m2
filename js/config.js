@@ -1,3 +1,3 @@
 const config = {
-  riotKey: "RGAPI-4f5a33a4-8ba7-49f4-9877-532e77f74ece",
+  riotKey: "RGAPI-27ff1145-6f01-49e1-acc3-c12474382bba",
 };
