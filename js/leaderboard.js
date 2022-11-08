@@ -94,7 +94,13 @@ async function getLeaderboard(server, page) {
   document.getElementById("summoners").innerHTML = loader;
 
   let leaderboardLink = `https://${server}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${riotKey}`;
-  const response = await fetch(leaderboardLink);
+  const response = await fetch(leaderboardLink, {
+      headers: {
+      'Content-Type':'application/json',
+                    'Access-Control-Allow-Origin':'*',
+                    'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+      },
+    });
   const data = await response.json();
   console.log(data);
   const searchResult = document.querySelector("#searchResultWrap ul");
